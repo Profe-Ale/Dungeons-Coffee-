@@ -1,1608 +1,1658 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="scroll-smooth">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mazmorras y Café | Ludoteca, Cafetería & Tienda de Juegos</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Lora:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --parchment-bg: #f4ebd8;
-      --parchment-light: #fbf6eb;
-      --parchment-dark: #e5d5b5;
-      --wood-dark: #2c1a12;
-      --wood-mid: #4a2e1f;
-      --crimson: #8b1e1e;
-      --crimson-hover: #6e1515;
-      --gold: #d49b27;
-      --gold-light: #f3c65f;
-      --ink: #24160f;
-      --ink-muted: #5c4333;
-      --border-ornate: #7a5230;
-    }
+  <title>Mazmorras y Café | Ludoteca, Cafetería &amp; Tienda de Juegos</title>
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts: Cinzel & Playfair Display (Títulos medievales/clásicos) + Lora & Lato (Lectura) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Lato:wght@400;700;900&family=Lora:ital,wght@0,500;0,600;0,700;1,500&display=swap" rel="stylesheet" />
+
+  <!-- Font Awesome para íconos temáticos (dados, ajedrez, café, corona, dragón) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            pergamino: {
+              light: '#fbf5e8',
+              DEFAULT: '#f5ebd6',
+              dark: '#ead7b7',
+              border: '#cbb389',
+            },
+            madera: {
+              light: '#5a3821',
+              DEFAULT: '#3b2314',
+              dark: '#241309',
+            },
+            dorado: {
+              light: '#f3d266',
+              DEFAULT: '#d4af37',
+              dark: '#9e7d1c',
+            },
+            carmesi: {
+              light: '#b32828',
+              DEFAULT: '#8b1e1e',
+              dark: '#5e1111',
+            },
+          },
+          fontFamily: {
+            display: ['Cinzel', 'serif'],
+            serif: ['Lora', 'serif'],
+            sans: ['Lato', 'sans-serif'],
+          },
+          boxShadow: {
+            pergamino: '0 10px 25px -5px rgba(36, 19, 9, 0.25), inset 0 0 30px rgba(203, 179, 137, 0.45)',
+            madera: '0 12px 30px -6px rgba(20, 10, 4, 0.55)',
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    /* Textura sutil de pergamino y madera */
     body {
-      font-family: 'Lora', Georgia, serif;
-      background-color: var(--parchment-bg);
-      background-image: radial-gradient(rgba(122, 82, 48, 0.08) 1px, transparent 0),
-                        radial-gradient(rgba(44, 26, 18, 0.05) 1px, transparent 0);
+      background-color: #f5ebd6;
+      background-image:
+        radial-gradient(rgba(139, 30, 30, 0.04) 1px, transparent 0),
+        radial-gradient(rgba(59, 35, 20, 0.05) 1px, #f5ebd6 0);
       background-size: 32px 32px;
       background-position: 0 0, 16px 16px;
-      color: var(--ink);
-      line-height: 1.6;
-      overflow-x: hidden;
+      color: #241309;
+      font-family: 'Lato', sans-serif;
     }
 
-    h1, h2, h3, h4, .font-title {
-      font-family: 'Cinzel', serif;
-      letter-spacing: 0.03em;
+    .textura-pergamino {
+      background: linear-gradient(145deg, #fbf5e8 0%, #f2e4c6 55%, #e8d3ad 100%);
+      border: 2px solid #9e7d1c;
+      box-shadow: 0 10px 24px rgba(36, 19, 9, 0.18), inset 0 0 24px rgba(186, 152, 98, 0.35);
     }
 
-    /* HEADER / NAV */
-    header {
-      background: linear-gradient(180deg, #1f110b 0%, var(--wood-dark) 100%);
-      border-bottom: 3px solid var(--gold);
-      position: sticky;
-      top: 0;
-      z-index: 900;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.45);
-    }
-    .nav-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0.8rem 1.2rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-    }
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      text-decoration: none;
-      color: var(--parchment-light);
-    }
-    .brand-emblem {
-      width: 44px;
-      height: 44px;
-      background: radial-gradient(circle, var(--gold) 0%, #8a5a10 100%);
-      border: 2px solid var(--parchment-light);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.4rem;
-      box-shadow: 0 0 10px rgba(212, 155, 39, 0.5);
-      flex-shrink: 0;
-    }
-    .brand-text span {
-      display: block;
-      font-family: 'Cinzel', serif;
-      font-weight: 800;
-      font-size: 1.15rem;
-      color: var(--gold-light);
-      line-height: 1.1;
-    }
-    .brand-text small {
-      font-size: 0.72rem;
-      color: var(--parchment-dark);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-    nav ul {
-      display: flex;
-      list-style: none;
-      gap: 1.25rem;
-      align-items: center;
-    }
-    nav a {
-      color: var(--parchment-light);
-      text-decoration: none;
-      font-family: 'Cinzel', serif;
-      font-size: 0.88rem;
-      font-weight: 600;
-      transition: color 0.2s;
-    }
-    nav a:hover { color: var(--gold-light); }
-
-    .header-actions {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
+    .textura-madera {
+      background: linear-gradient(160deg, #3b2314 0%, #241309 100%);
+      border: 2px solid #d4af37;
     }
 
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.45rem;
-      padding: 0.6rem 1.1rem;
-      border-radius: 6px;
-      font-family: 'Cinzel', serif;
-      font-weight: 700;
-      font-size: 0.85rem;
-      cursor: pointer;
-      border: 2px solid transparent;
-      transition: all 0.2s ease;
-      text-decoration: none;
-    }
-    .btn-primary {
-      background: var(--crimson);
-      color: #fff;
-      border-color: var(--gold);
-      box-shadow: 0 3px 8px rgba(0,0,0,0.3);
-    }
-    .btn-primary:hover { background: var(--crimson-hover); transform: translateY(-1px); }
-
-    .btn-gold {
-      background: linear-gradient(180deg, var(--gold-light) 0%, var(--gold) 100%);
-      color: var(--wood-dark);
-      border-color: var(--wood-dark);
-    }
-    .btn-gold:hover { filter: brightness(1.06); transform: translateY(-1px); }
-
-    .btn-outline {
-      background: transparent;
-      color: var(--parchment-light);
-      border-color: var(--gold);
-    }
-    .btn-outline:hover { background: rgba(212, 155, 39, 0.15); }
-
-    .btn-edit-active {
-      background: #1f7a3e !important;
-      color: #fff !important;
-      border-color: #a3f7bf !important;
-      animation: pulseEdit 2s infinite;
-    }
-    @keyframes pulseEdit {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(31, 122, 62, 0.6); }
-      50% { box-shadow: 0 0 0 6px rgba(31, 122, 62, 0); }
+    .cinta-carmesi {
+      background: linear-gradient(90deg, #5e1111 0%, #8b1e1e 50%, #5e1111 100%);
+      border-top: 2px solid #d4af37;
+      border-bottom: 2px solid #d4af37;
     }
 
-    .cart-btn {
+    .borde-doble-dorado {
       position: relative;
-      background: var(--wood-mid);
-      color: var(--gold-light);
-      border: 1.5px solid var(--gold);
-      padding: 0.5rem 0.85rem;
-      border-radius: 6px;
-      cursor: pointer;
-      font-family: 'Cinzel', serif;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
+      border: 2px solid #9e7d1c;
     }
-    .cart-badge {
-      background: var(--crimson);
-      color: #fff;
-      font-size: 0.75rem;
-      padding: 0.1rem 0.45rem;
-      border-radius: 999px;
-      border: 1px solid var(--gold-light);
-    }
-
-    /* EDIT BANNER */
-    #edit-banner {
-      display: none;
-      background: #184e2b;
-      color: #fff;
-      text-align: center;
-      padding: 0.65rem 1rem;
-      font-size: 0.9rem;
-      border-bottom: 2px solid #8ce99a;
-      position: sticky;
-      top: 66px;
-      z-index: 890;
-    }
-    #edit-banner.visible { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.8rem; }
-    .edit-banner-btn {
-      background: #fff;
-      color: #184e2b;
-      border: none;
-      padding: 0.3rem 0.75rem;
-      border-radius: 4px;
-      font-weight: 700;
-      cursor: pointer;
-      font-size: 0.8rem;
-    }
-    .edit-banner-btn.danger { background: #ffc9c9; color: #7a1212; }
-
-    /* HERO */
-    .hero {
-      background: linear-gradient(rgba(28, 15, 9, 0.82), rgba(44, 26, 18, 0.9)),
-                  repeating-linear-gradient(45deg, #2b1810 0, #2b1810 10px, #351f15 10px, #351f15 20px);
-      color: var(--parchment-light);
-      padding: 4.5rem 1.25rem 4rem;
-      text-align: center;
-      border-bottom: 4px double var(--gold);
-      position: relative;
-    }
-    .hero-badge {
-      display: inline-block;
-      background: rgba(212, 155, 39, 0.18);
-      border: 1px solid var(--gold);
-      color: var(--gold-light);
-      padding: 0.35rem 1rem;
-      border-radius: 999px;
-      font-family: 'Cinzel', serif;
-      font-size: 0.82rem;
-      margin-bottom: 1rem;
-      letter-spacing: 0.08em;
-    }
-    .hero h1 {
-      font-size: clamp(2rem, 5vw, 3.4rem);
-      color: var(--gold-light);
-      text-shadow: 0 3px 10px rgba(0,0,0,0.7);
-      margin-bottom: 0.75rem;
-      line-height: 1.15;
-    }
-    .hero p {
-      max-width: 680px;
-      margin: 0 auto 2rem;
-      font-size: 1.1rem;
-      color: var(--parchment-dark);
-    }
-    .hero-cta {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 1rem;
-    }
-    .hero-highlights {
-      max-width: 960px;
-      margin: 2.8rem auto 0;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-      gap: 1rem;
-    }
-    .highlight-pill {
-      background: rgba(251, 246, 235, 0.08);
-      border: 1px solid rgba(212, 155, 39, 0.45);
-      border-radius: 8px;
-      padding: 1rem;
-    }
-    .highlight-pill strong {
-      display: block;
-      font-family: 'Cinzel', serif;
-      color: var(--gold-light);
-      font-size: 1.05rem;
-    }
-    .highlight-pill span {
-      font-size: 0.88rem;
-      color: var(--parchment-dark);
-    }
-
-    /* SECTIONS */
-    section {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 4rem 1.25rem;
-    }
-    .section-header {
-      text-align: center;
-      margin-bottom: 2.5rem;
-    }
-    .section-header h2 {
-      font-size: clamp(1.65rem, 3.5vw, 2.35rem);
-      color: var(--crimson);
-      display: inline-block;
-      position: relative;
-      padding-bottom: 0.5rem;
-    }
-    .section-header h2::after {
-      content: "";
-      display: block;
-      width: 70%;
-      height: 3px;
-      background: linear-gradient(90deg, transparent, var(--gold), transparent);
-      margin: 0.4rem auto 0;
-    }
-    .section-header p {
-      color: var(--ink-muted);
-      max-width: 620px;
-      margin: 0.5rem auto 0;
-    }
-
-    /* PARCHMENT CARDS */
-    .parchment-box {
-      background: var(--parchment-light);
-      border: 2px solid var(--border-ornate);
-      border-radius: 10px;
-      box-shadow: 0 6px 18px rgba(44, 26, 18, 0.12), inset 0 0 24px rgba(212, 155, 39, 0.12);
-      padding: 1.5rem;
-      position: relative;
-    }
-
-    /* LUDOTECA & VIP GRID */
-    .passes-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1.4rem;
-      margin-bottom: 2.5rem;
-    }
-    .pass-card {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      transition: transform 0.2s;
-    }
-    .pass-card:hover { transform: translateY(-4px); }
-    .pass-card.vip {
-      background: linear-gradient(180deg, #321b11 0%, #1f110a 100%);
-      color: var(--parchment-light);
-      border: 2px solid var(--gold);
-    }
-    .pass-card.vip h3 { color: var(--gold-light); }
-    .pass-card.vip .pass-desc { color: var(--parchment-dark); }
-    .pass-tag {
-      display: inline-block;
-      font-family: 'Cinzel', serif;
-      font-size: 0.72rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      padding: 0.2rem 0.6rem;
-      border-radius: 4px;
-      background: var(--parchment-dark);
-      color: var(--wood-dark);
-      margin-bottom: 0.6rem;
-      width: fit-content;
-    }
-    .pass-card.vip .pass-tag { background: var(--gold); color: var(--wood-dark); }
-    .pass-card h3 { font-size: 1.25rem; color: var(--wood-dark); margin-bottom: 0.4rem; }
-    .pass-price {
-      font-family: 'Cinzel', serif;
-      font-size: 1.75rem;
-      font-weight: 800;
-      color: var(--crimson);
-      margin: 0.5rem 0;
-    }
-    .pass-card.vip .pass-price { color: var(--gold-light); }
-    .pass-desc { font-size: 0.92rem; color: var(--ink-muted); margin-bottom: 1.2rem; }
-
-    /* MENU TABS & LIST */
-    .menu-tabs {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 0.6rem;
-      margin-bottom: 1.8rem;
-    }
-    .tab-btn {
-      background: var(--parchment-light);
-      border: 1.5px solid var(--border-ornate);
-      color: var(--wood-dark);
-      padding: 0.5rem 1rem;
-      border-radius: 6px;
-      font-family: 'Cinzel', serif;
-      font-weight: 700;
-      font-size: 0.85rem;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .tab-btn.active, .tab-btn:hover {
-      background: var(--wood-dark);
-      color: var(--gold-light);
-      border-color: var(--gold);
-    }
-    .menu-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 1rem;
-    }
-    .menu-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 1rem;
-      padding: 0.9rem 1.1rem;
-      background: var(--parchment-light);
-      border: 1px solid rgba(122, 82, 48, 0.35);
-      border-radius: 8px;
-    }
-    .menu-item-info strong {
-      display: block;
-      font-family: 'Cinzel', serif;
-      font-size: 0.98rem;
-      color: var(--wood-dark);
-    }
-    .menu-item-info small {
-      color: var(--ink-muted);
-      font-size: 0.82rem;
-    }
-    .menu-item-price {
-      font-family: 'Cinzel', serif;
-      font-weight: 800;
-      font-size: 1.1rem;
-      color: var(--crimson);
-      white-space: nowrap;
-    }
-
-    /* CATALOGO JUEGOS DE MESA */
-    .catalog-controls {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: center;
-      gap: 1rem;
-      margin-bottom: 1.5rem;
-    }
-    .search-input {
-      padding: 0.65rem 1rem;
-      border: 1.5px solid var(--border-ornate);
-      border-radius: 6px;
-      background: var(--parchment-light);
-      font-family: 'Lora', serif;
-      font-size: 0.95rem;
-      min-width: 260px;
-      flex: 1;
-      max-width: 400px;
-    }
-    .games-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-      gap: 1.5rem;
-    }
-    .game-card {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      overflow: hidden;
-      padding: 0;
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .game-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 10px 24px rgba(44, 26, 18, 0.2);
-    }
-    .game-img-wrap {
-      width: 100%;
-      height: 200px;
-      background: #fff;
-      border-bottom: 2px solid var(--border-ornate);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0.75rem;
-      position: relative;
-    }
-    .game-img-wrap img {
-      max-width: 100%;
-      max-height: 100%;
-      object-fit: contain;
-    }
-    .game-body {
-      padding: 1.2rem;
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-      justify-content: space-between;
-    }
-    .game-meta {
-      font-size: 0.78rem;
-      color: var(--ink-muted);
-      margin-bottom: 0.35rem;
-      font-weight: 600;
-    }
-    .game-body h3 {
-      font-size: 1.2rem;
-      color: var(--wood-dark);
-      margin-bottom: 0.4rem;
-    }
-    .game-body p {
-      font-size: 0.88rem;
-      color: var(--ink-muted);
-      margin-bottom: 1rem;
-    }
-    .game-footer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.5rem;
-      padding-top: 0.8rem;
-      border-top: 1px dashed rgba(122, 82, 48, 0.4);
-    }
-    .game-price {
-      font-family: 'Cinzel', serif;
-      font-size: 1.25rem;
-      font-weight: 800;
-      color: var(--crimson);
-    }
-
-    /* RESERVAS FORM */
-    .booking-wrapper {
-      display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 2rem;
-      align-items: start;
-    }
-    @media (max-width: 820px) {
-      .booking-wrapper { grid-template-columns: 1fr; }
-      nav ul { display: none; }
-    }
-    .form-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-    }
-    @media (max-width: 540px) {
-      .form-grid { grid-template-columns: 1fr; }
-    }
-    .form-group {
-      display: flex;
-      flex-direction: column;
-      gap: 0.35rem;
-      margin-bottom: 0.9rem;
-    }
-    .form-group.full { grid-column: 1 / -1; }
-    label {
-      font-family: 'Cinzel', serif;
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: var(--wood-dark);
-    }
-    input, select, textarea {
-      padding: 0.65rem 0.85rem;
-      border: 1.5px solid var(--border-ornate);
-      border-radius: 6px;
-      background: #fffdf9;
-      font-family: 'Lora', serif;
-      font-size: 0.95rem;
-      color: var(--ink);
-    }
-    input:focus, select:focus, textarea:focus {
-      outline: none;
-      border-color: var(--crimson);
-      box-shadow: 0 0 0 3px rgba(139, 30, 30, 0.15);
-    }
-    .summary-box {
-      background: var(--wood-dark);
-      color: var(--parchment-light);
-      border: 2px solid var(--gold);
-    }
-    .summary-box h3 { color: var(--gold-light); margin-bottom: 1rem; }
-    .summary-row {
-      display: flex;
-      justify-content: space-between;
-      padding: 0.55rem 0;
-      border-bottom: 1px solid rgba(212, 155, 39, 0.25);
-      font-size: 0.92rem;
-    }
-    .summary-total {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 1rem;
-      padding-top: 0.8rem;
-      border-top: 2px solid var(--gold);
-      font-family: 'Cinzel', serif;
-      font-size: 1.25rem;
-      font-weight: 800;
-      color: var(--gold-light);
-    }
-
-    /* FOOTER */
-    footer {
-      background: var(--wood-dark);
-      color: var(--parchment-dark);
-      border-top: 4px solid var(--gold);
-      padding: 3rem 1.25rem 1.5rem;
-      margin-top: 3rem;
-    }
-    .footer-grid {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 2rem;
-      margin-bottom: 2rem;
-    }
-    .footer-grid h4 { color: var(--gold-light); margin-bottom: 0.75rem; font-size: 1.1rem; }
-    .footer-bottom {
-      text-align: center;
-      padding-top: 1.2rem;
-      border-top: 1px solid rgba(212, 155, 39, 0.25);
-      font-size: 0.85rem;
-    }
-
-    /* CART DRAWER & MODALS */
-    .drawer-backdrop {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.6);
-      z-index: 1000;
-      display: none;
-      justify-content: flex-end;
-    }
-    .drawer-backdrop.open { display: flex; }
-    .drawer {
-      width: 100%;
-      max-width: 420px;
-      background: var(--parchment-light);
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      border-left: 3px solid var(--gold);
-      box-shadow: -6px 0 24px rgba(0,0,0,0.4);
-    }
-    .drawer-header {
-      background: var(--wood-dark);
-      color: var(--gold-light);
-      padding: 1.1rem 1.25rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .drawer-body {
-      flex: 1;
-      overflow-y: auto;
-      padding: 1.25rem;
-    }
-    .cart-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 0.75rem;
-      padding: 0.85rem 0;
-      border-bottom: 1px solid rgba(122, 82, 48, 0.3);
-    }
-    .qty-controls {
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
-    .qty-btn {
-      width: 26px;
-      height: 26px;
-      border-radius: 4px;
-      border: 1px solid var(--border-ornate);
-      background: var(--parchment-dark);
-      font-weight: 700;
-      cursor: pointer;
-    }
-    .drawer-footer {
-      padding: 1.25rem;
-      background: var(--parchment-dark);
-      border-top: 2px solid var(--border-ornate);
-    }
-
-    /* MODAL EDIT */
-    .modal-backdrop {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.68);
-      z-index: 1100;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 1rem;
-    }
-    .modal-backdrop.open { display: flex; }
-    .modal-card {
-      background: var(--parchment-light);
-      border: 3px solid var(--gold);
-      border-radius: 10px;
-      max-width: 650px;
-      width: 100%;
-      max-height: 88vh;
-      overflow-y: auto;
-      padding: 1.5rem;
-      box-shadow: 0 12px 32px rgba(0,0,0,0.5);
-    }
-
-    /* EDITABLE HIGHLIGHT */
-    body.edit-mode [data-editable] {
-      outline: 2px dashed #1f7a3e;
-      background-color: rgba(31, 122, 62, 0.08);
-      cursor: pointer;
-      border-radius: 4px;
-      padding: 1px 4px;
-    }
-    body.edit-mode [data-editable]:hover {
-      background-color: rgba(31, 122, 62, 0.2);
-    }
-    .delete-game-btn {
-      display: none;
+    .borde-doble-dorado::after {
+      content: '';
       position: absolute;
-      top: 8px;
-      right: 8px;
-      background: var(--crimson);
-      color: #fff;
-      border: none;
-      border-radius: 4px;
-      padding: 0.25rem 0.5rem;
-      font-size: 0.75rem;
-      cursor: pointer;
-      z-index: 5;
+      inset: 4px;
+      border: 1px solid rgba(212, 175, 55, 0.65);
+      pointer-events: none;
+      border-radius: inherit;
     }
-    body.edit-mode .delete-game-btn { display: inline-block; }
 
-    /* MOBILE BOTTOM BAR */
-    .mobile-bar {
-      display: none;
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: var(--wood-dark);
-      border-top: 2px solid var(--gold);
-      z-index: 880;
-      padding: 0.45rem;
-      justify-content: space-around;
+    /* Resaltado de campos editables cuando el Modo Edición está activo */
+    body.admin-mode .editable-field {
+      outline: 2px dashed #d4af37;
+      background-color: rgba(212, 175, 55, 0.18);
+      border-radius: 6px;
+      padding: 2px 6px;
+      cursor: text;
+      transition: all 0.2s ease;
     }
-    .mobile-bar a {
-      color: var(--parchment-light);
-      text-decoration: none;
-      font-family: 'Cinzel', serif;
-      font-size: 0.7rem;
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.15rem;
+    body.admin-mode .editable-field:hover,
+    body.admin-mode .editable-field:focus {
+      outline: 2px solid #8b1e1e;
+      background-color: #fff9e6;
+      color: #241309;
     }
-    @media (max-width: 768px) {
-      .mobile-bar { display: flex; }
-      body { padding-bottom: 58px; }
-      .header-actions .btn-text-hide { display: none; }
+
+    /* Animaciones suaves */
+    @keyframes floatSlow {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-6px); }
+    }
+    .animate-float {
+      animation: floatSlow 4s ease-in-out infinite;
+    }
+
+    /* Scrollbar personalizada */
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #241309;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #9e7d1c;
+      border-radius: 5px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #d4af37;
     }
   </style>
 </head>
-<body>
+<body class="min-h-screen flex flex-col selection:bg-carmesi selection:text-pergamino-light">
 
-  <!-- HEADER -->
-  <header>
-    <div class="nav-container">
-      <a href="#" class="brand">
-        <div class="brand-emblem">🎲</div>
-        <div class="brand-text">
-          <span id="site-name" data-editable="siteName">MAZMORRAS Y CAFÉ</span>
-          <small id="site-location-short" data-editable="locationShort">Av. Perón, San Miguel</small>
+  <!-- BARRA SUPERIOR DE MODO EDICIÓN (Visible solo cuando está activo) -->
+  <div id="admin-banner" class="hidden sticky top-0 z-50 bg-carmesi text-pergamino-light px-4 py-2.5 shadow-lg border-b-2 border-dorado">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3 text-sm">
+      <div class="flex items-center gap-2">
+        <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-dorado text-madera-dark font-bold">
+          <i class="fa-solid fa-pen-to-square"></i>
+        </span>
+        <div>
+          <strong class="font-display tracking-wider text-dorado-light">MODO EDICIÓN ACTIVO:</strong>
+          <span class="ml-1">Hacé clic sobre cualquier precio, título o dato de contacto resaltado para editarlo en vivo.</span>
         </div>
-      </a>
-
-      <nav>
-        <ul>
-          <li><a href="#ludoteca">Ludoteca & VIP</a></li>
-          <li><a href="#carta">Cafetería</a></li>
-          <li><a href="#catalogo">Tienda de Juegos</a></li>
-          <li><a href="#reservas">Reservar Turno</a></li>
-        </ul>
-      </nav>
-
-      <div class="header-actions">
-        <button id="toggle-edit-btn" class="btn btn-outline" onclick="toggleEditMode()" title="Editar precios y datos del negocio">
-          ✏️ <span class="btn-text-hide">Editar Precios / Datos</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <button onclick="openAddGameModal()" class="px-3 py-1.5 rounded-lg bg-dorado text-madera-dark font-bold hover:bg-dorado-light transition flex items-center gap-1.5 text-xs sm:text-sm">
+          <i class="fa-solid fa-plus"></i> Agregar Juego
         </button>
-        <button class="cart-btn" onclick="openCart()">
-          🛒 <span class="cart-badge" id="cart-count">0</span>
+        <button onclick="resetAllData()" class="px-3 py-1.5 rounded-lg bg-madera-dark text-pergamino-light border border-pergamino-border/50 hover:bg-black transition flex items-center gap-1.5 text-xs sm:text-sm">
+          <i class="fa-solid fa-rotate-left"></i> Restaurar Original
+        </button>
+        <button onclick="toggleAdminMode()" class="px-3 py-1.5 rounded-lg bg-emerald-700 text-white font-bold hover:bg-emerald-600 transition flex items-center gap-1.5 text-xs sm:text-sm">
+          <i class="fa-solid fa-check"></i> Guardar y Salir
         </button>
       </div>
+    </div>
+  </div>
+
+  <!-- HEADER Y NAVEGACIÓN -->
+  <header class="sticky top-0 z-40 textura-madera text-pergamino-light shadow-madera border-x-0 border-t-0">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        <!-- Emblema / Logo -->
+        <a href="#inicio" class="flex items-center gap-3 group">
+          <div class="w-12 h-12 rounded-full bg-gradient-to-br from-carmesi to-madera-dark border-2 border-dorado flex items-center justify-center shadow-md group-hover:scale-105 transition">
+            <!-- SVG Emblema D20 + Taza -->
+            <svg class="w-8 h-8 text-dorado" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polygon points="32,4 56,18 56,46 32,60 8,46 8,18" fill="#5e1111" stroke="#d4af37"/>
+              <path d="M22 30h16v9a8 8 0 0 1-16 0v-9z" fill="#f5ebd6" stroke="#d4af37"/>
+              <path d="M38 32h3a3 3 0 0 1 0 6h-3" stroke="#d4af37"/>
+              <path d="M26 24c0-3 3-3 3-6M32 24c0-3 3-3 3-6" stroke="#f3d266" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div>
+            <span class="block font-display font-black text-lg sm:text-xl tracking-wider text-dorado leading-none">MAZMORRAS</span>
+            <span class="block font-display font-bold text-xs sm:text-sm tracking-[0.22em] text-pergamino-light">Y CAFÉ</span>
+          </div>
+        </a>
+
+        <!-- Navegación Desktop -->
+        <nav class="hidden lg:flex items-center gap-6 font-display text-sm font-bold tracking-wide">
+          <a href="#inicio" class="hover:text-dorado transition">Inicio</a>
+          <a href="#carta" class="hover:text-dorado transition">Carta y Tarifas</a>
+          <a href="#catalogo" class="hover:text-dorado transition">Tienda de Juegos</a>
+          <a href="#reservas" class="hover:text-dorado transition">Reservar Turno</a>
+          <a href="#vip" class="hover:text-dorado transition">Socio VIP</a>
+          <a href="#contacto" class="hover:text-dorado transition">Ubicación</a>
+        </nav>
+
+        <!-- Acciones Header (Carrito + Modo Edición + Menú Móvil) -->
+        <div class="flex items-center gap-2 sm:gap-3">
+          <!-- Botón Modo Edición -->
+          <button
+            id="btn-toggle-admin"
+            onclick="toggleAdminMode()"
+            title="Editar precios y datos del local"
+            class="px-3 py-2 rounded-xl bg-madera-light/80 hover:bg-dorado hover:text-madera-dark border border-dorado/60 text-dorado-light text-xs font-bold transition flex items-center gap-1.5"
+          >
+            <i class="fa-solid fa-sliders"></i>
+            <span class="hidden sm:inline">Editar Precios / Datos</span>
+          </button>
+
+          <!-- Botón Carrito -->
+          <button
+            onclick="toggleCartModal(true)"
+            class="relative p-2.5 rounded-xl bg-carmesi hover:bg-carmesi-light border border-dorado text-pergamino-light transition shadow-md"
+            aria-label="Ver carrito de compras"
+          >
+            <i class="fa-solid fa-cart-shopping text-base sm:text-lg"></i>
+            <span id="cart-badge" class="absolute -top-2 -right-2 w-5 h-5 rounded-full bg-dorado text-madera-dark font-black text-xs flex items-center justify-center shadow">
+              0
+            </span>
+          </button>
+
+          <!-- Botón Menú Hamburguesa Móvil -->
+          <button
+            id="mobile-menu-btn"
+            onclick="toggleMobileMenu()"
+            class="lg:hidden p-2.5 rounded-xl bg-madera-light border border-dorado/50 text-dorado hover:bg-dorado hover:text-madera-dark transition"
+            aria-label="Abrir menú"
+          >
+            <i class="fa-solid fa-bars text-lg"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Menú Desplegable Móvil -->
+    <div id="mobile-menu" class="hidden lg:hidden bg-madera-dark border-t border-dorado/40 px-4 pt-3 pb-5 space-y-2 font-display text-sm">
+      <a href="#inicio" onclick="toggleMobileMenu()" class="block py-2 px-3 rounded-lg hover:bg-madera-light text-pergamino-light">Inicio</a>
+      <a href="#carta" onclick="toggleMobileMenu()" class="block py-2 px-3 rounded-lg hover:bg-madera-light text-pergamino-light">Carta, Ludoteca y Tarifas</a>
+      <a href="#catalogo" onclick="toggleMobileMenu()" class="block py-2 px-3 rounded-lg hover:bg-madera-light text-pergamino-light">Catálogo de Juegos en Venta</a>
+      <a href="#reservas" onclick="toggleMobileMenu()" class="block py-2 px-3 rounded-lg hover:bg-madera-light text-pergamino-light">Reservar Turno / Evento</a>
+      <a href="#vip" onclick="toggleMobileMenu()" class="block py-2 px-3 rounded-lg hover:bg-madera-light text-dorado">Membresía Socio VIP</a>
+      <a href="#contacto" onclick="toggleMobileMenu()" class="block py-2 px-3 rounded-lg hover:bg-madera-light text-pergamino-light">Ubicación y Contacto</a>
     </div>
   </header>
 
-  <!-- BARRA DE MODO EDICIÓN -->
-  <div id="edit-banner">
-    <span>🛠️ <strong>Modo Edición Activo:</strong> Hacé clic sobre cualquier precio o texto resaltado en verde para modificarlo.</span>
-    <button class="edit-banner-btn" onclick="openBusinessSettings()">⚙️ Datos del Negocio y WhatsApp</button>
-    <button class="edit-banner-btn" onclick="openAddGameModal()">➕ Agregar Juego al Catálogo</button>
-    <button class="edit-banner-btn danger" onclick="resetAllData()">↺ Restaurar Valores Originales</button>
-  </div>
+  <!-- HERO BANNER -->
+  <section id="inicio" class="relative overflow-hidden py-12 sm:py-20 px-4">
+    <!-- Decoración de fondo -->
+    <div class="max-w-7xl mx-auto">
+      <div class="textura-pergamino borde-doble-dorado rounded-3xl p-6 sm:p-12 lg:p-16 relative overflow-hidden">
+        <!-- Esquinas decorativas con íconos temáticos -->
+        <div class="hidden sm:flex absolute top-5 left-5 w-11 h-11 rounded-full bg-madera text-dorado border-2 border-dorado items-center justify-center shadow">
+          <i class="fa-solid fa-dice-d20 text-lg"></i>
+        </div>
+        <div class="hidden sm:flex absolute top-5 right-5 w-11 h-11 rounded-full bg-madera text-dorado border-2 border-dorado items-center justify-center shadow">
+          <i class="fa-solid fa-mug-hot text-lg"></i>
+        </div>
+        <div class="hidden sm:flex absolute bottom-5 left-5 w-11 h-11 rounded-full bg-madera text-dorado border-2 border-dorado items-center justify-center shadow">
+          <i class="fa-solid fa-chess-rook text-lg"></i>
+        </div>
+        <div class="hidden sm:flex absolute bottom-5 right-5 w-11 h-11 rounded-full bg-madera text-dorado border-2 border-dorado items-center justify-center shadow">
+          <i class="fa-solid fa-dragon text-lg"></i>
+        </div>
 
-  <!-- HERO -->
-  <div class="hero">
-    <div class="hero-badge">🐉 LUDOTECA • CAFETERÍA DE ESPECIALIDAD • TIENDA</div>
-    <h1 id="hero-title" data-editable="heroTitle">¡Vení a Jugar, Saborear y Conquistar!</h1>
-    <p id="hero-subtitle" data-editable="heroSubtitle">
-      Más de cientos de juegos de mesa para elegir, partidas de rol, torneos épicos y café molido al momento en el corazón de San Miguel.
-    </p>
-    <div class="hero-cta">
-      <a href="#reservas" class="btn btn-gold">📅 Reservar Turno o Evento</a>
-      <a href="#catalogo" class="btn btn-primary">🎲 Ver Catálogo de Juegos</a>
-    </div>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center relative z-10">
+          <!-- Texto Principal Hero -->
+          <div class="lg:col-span-7 text-center lg:text-left space-y-5">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-carmesi text-pergamino-light border border-dorado text-xs sm:text-sm font-bold tracking-wider uppercase shadow">
+              <i class="fa-solid fa-location-dot text-dorado"></i>
+              <span class="editable-field" data-key="info.address">Av. Perón, San Miguel</span>
+            </div>
 
-    <div class="hero-highlights">
-      <div class="highlight-pill">
-        <strong>⏳ Pase Libre 3 Horas</strong>
-        <span>Acceso completo a nuestra ludoteca base</span>
-      </div>
-      <div class="highlight-pill">
-        <strong>☕ Café & Pastelería</strong>
-        <span>Especialidad, postres caseros y snacks</span>
-      </div>
-      <div class="highlight-pill">
-        <strong>👑 Membresía Socio VIP</strong>
-        <span>Descuentos en horas y zonas exclusivas</span>
-      </div>
-      <div class="highlight-pill">
-        <strong>📍 Ubicación</strong>
-        <span id="hero-address" data-editable="address">Av. Perón, San Miguel</span>
-      </div>
-    </div>
-  </div>
+            <h1 class="font-display font-black text-4xl sm:text-5xl lg:text-6xl text-madera-dark leading-tight tracking-tight">
+              <span class="editable-field" data-key="info.brandName">MAZMORRAS Y CAFÉ</span>
+            </h1>
 
-  <!-- LUDOTECA, EVENTOS Y MEMBRESÍA VIP -->
-  <section id="ludoteca">
-    <div class="section-header">
-      <h2>Ludoteca, Eventos & Membresía VIP</h2>
-      <p>Elegí tu pase para pasar el día jugando o sumate a nuestras jornadas temáticas y torneos.</p>
-    </div>
+            <div class="inline-block cinta-carmesi px-6 py-2 rounded-xl shadow-md">
+              <p class="font-display font-bold text-lg sm:text-2xl text-dorado-light tracking-wide editable-field" data-key="info.slogan">
+                ¡JUGÁ MÁS, DISFRUTÁ MÁS!
+              </p>
+            </div>
 
-    <div class="passes-grid" id="passes-container">
-      <!-- Renderizado dinámico JS -->
+            <p class="font-serif text-base sm:text-lg text-madera leading-relaxed max-w-2xl mx-auto lg:mx-0 editable-field" data-key="info.heroDesc">
+              Vení a disfrutar de una rica gastronomía en un momento de gran diversión. Accedé a nuestra ludoteca con cientos de títulos, cafés de especialidad, pastelería casera, noches temáticas de rol y tienda oficial de juegos de mesa.
+            </p>
+
+            <!-- Botones CTA -->
+            <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
+              <a href="#reservas" class="w-full sm:w-auto px-7 py-4 rounded-2xl bg-carmesi hover:bg-carmesi-light text-pergamino-light font-display font-bold text-base tracking-wider border-2 border-dorado shadow-lg hover:-translate-y-0.5 transition flex items-center justify-center gap-2">
+                <i class="fa-solid fa-calendar-check text-dorado"></i>
+                Reservar Turno / Evento
+              </a>
+              <a href="#catalogo" class="w-full sm:w-auto px-7 py-4 rounded-2xl bg-madera hover:bg-madera-light text-dorado-light font-display font-bold text-base tracking-wider border-2 border-dorado shadow-lg hover:-translate-y-0.5 transition flex items-center justify-center gap-2">
+                <i class="fa-solid fa-store text-dorado"></i>
+                Comprar Juegos de Mesa
+              </a>
+            </div>
+          </div>
+
+          <!-- Ilustración / Escudo Central Temático -->
+          <div class="lg:col-span-5 flex justify-center">
+            <div class="w-full max-w-sm textura-madera rounded-3xl p-6 text-center text-pergamino-light shadow-madera animate-float">
+              <!-- Emblema SVG Detallado estilo Flyer -->
+              <svg class="w-44 h-44 mx-auto mb-4" viewBox="0 0 200 200" fill="none">
+                <!-- Arco de piedra -->
+                <circle cx="100" cy="100" r="88" fill="#241309" stroke="#d4af37" stroke-width="5"/>
+                <circle cx="100" cy="100" r="78" fill="#3b2314" stroke="#9e7d1c" stroke-width="2" stroke-dasharray="8 6"/>
+                <!-- Resplandor cálido -->
+                <circle cx="100" cy="95" r="52" fill="url(#warmGlow)"/>
+                <!-- Taza de café con Meeple -->
+                <path d="M66 95h60v26a26 26 0 0 1-26 26h-8a26 26 0 0 1-26-26V95z" fill="#f5ebd6" stroke="#241309" stroke-width="3"/>
+                <path d="M126 102h11a10 10 0 0 1 0 20h-11" stroke="#f5ebd6" stroke-width="6" stroke-linecap="round"/>
+                <!-- Meeple en la taza -->
+                <path d="M96 108c-2 0-3.5 1.5-3.5 3.5 0 1.2.6 2.2 1.5 2.8l-5 4.2 2 3 4-2.5v7h3v-4h2v4h3v-7l4 2.5 2-3-5-4.2c.9-.6 1.5-1.6 1.5-2.8 0-2-1.5-3.5-3.5-3.5h-2z" fill="#3b2314"/>
+                <!-- Vapor -->
+                <path d="M86 84c0-7 6-7 6-14M100 82c0-7 6-7 6-14M112 85c0-6 5-6 5-12" stroke="#f3d266" stroke-width="3" stroke-linecap="round"/>
+                <!-- Dado D20 rojo -->
+                <polygon points="52,115 68,124 68,142 52,151 36,142 36,124" fill="#8b1e1e" stroke="#f3d266" stroke-width="2.5"/>
+                <text x="52" y="138" text-anchor="middle" fill="#fbf5e8" font-family="Cinzel" font-weight="bold" font-size="13">20</text>
+                <!-- Meeple rojo derecho -->
+                <path d="M148 112c-3.5 0-6 2.5-6 6 0 2 1 3.8 2.6 4.8l-8.6 7.2 3.4 5 6.8-4.2v12h5.2v-7h3.2v7h5.2v-12l6.8 4.2 3.4-5-8.6-7.2c1.6-1 2.6-2.8 2.6-4.8 0-3.5-2.5-6-6-6h-3.6z" fill="#b32828" stroke="#f3d266" stroke-width="2"/>
+                <defs>
+                  <radialGradient id="warmGlow" cx="0.5" cy="0.5" r="0.5">
+                    <stop offset="0%" stop-color="#f3d266" stop-opacity="0.65"/>
+                    <stop offset="100%" stop-color="#3b2314" stop-opacity="0"/>
+                  </radialGradient>
+                </defs>
+              </svg>
+
+              <div class="border-t border-dorado/40 pt-4 space-y-2">
+                <p class="font-display text-dorado text-sm tracking-widest uppercase">Pase Libre por Turno</p>
+                <p class="font-display font-black text-3xl sm:text-4xl text-pergamino-light">
+                  $<span class="editable-field" data-key="prices.paseLibre">3.500</span>
+                </p>
+                <p class="text-xs text-pergamino-dark">(3 Horas por persona · Acceso total a la ludoteca)</p>
+                <a href="#reservas" class="mt-3 inline-block w-full py-2.5 px-4 rounded-xl bg-dorado hover:bg-dorado-light text-madera-dark font-display font-extrabold text-sm transition">
+                  ¡Reservar Ahora!
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- CARTA GASTRONÓMICA -->
-  <section id="carta" style="padding-top: 1rem;">
-    <div class="section-header">
-      <h2>Carta de Cafetería & Taberna</h2>
-      <p>Disfrutá de una rica gastronomía en un momento de gran diversión.</p>
-    </div>
-
-    <div class="menu-tabs" id="menu-tabs">
-      <button class="tab-btn active" onclick="filterMenu('todos', this)">Todo el Menú</button>
-      <button class="tab-btn" onclick="filterMenu('cafeteria', this)">☕ Cafetería de Especialidad</button>
-      <button class="tab-btn" onclick="filterMenu('pasteleria', this)">🧁 Pastelería</button>
-      <button class="tab-btn" onclick="filterMenu('salado', this)">🥪 Almuerzos y Cenas</button>
-      <button class="tab-btn" onclick="filterMenu('bebidas', this)">🥤 Bebidas Frías</button>
-    </div>
-
-    <div class="menu-grid" id="menu-container">
-      <!-- Renderizado dinámico JS -->
-    </div>
-  </section>
-
-  <!-- CATÁLOGO DE JUEGOS DE MESA -->
-  <section id="catalogo">
-    <div class="section-header">
-      <h2>Tienda de Juegos de Mesa</h2>
-      <p>Llevate los mejores clásicos y juegos de fiesta para seguir la partida en casa.</p>
-    </div>
-
-    <div class="catalog-controls">
-      <input type="text" id="game-search" class="search-input" placeholder="🔍 Buscar juego (ej. Catan, Monopoly, T.E.G...)..." oninput="renderGames()" />
-      <button class="btn btn-gold" onclick="openAddGameModal()">➕ Sumar Juego</button>
-    </div>
-
-    <div class="games-grid" id="games-container">
-      <!-- Renderizado dinámico JS -->
-    </div>
-  </section>
-
-  <!-- RESERVA DE TURNOS Y EVENTOS -->
-  <section id="reservas">
-    <div class="section-header">
-      <h2>Reservar Turno o Evento</h2>
-      <p>Asegurá tu mesa para pasar el día con amigos, jugar rol o participar en nuestros torneos.</p>
-    </div>
-
-    <div class="booking-wrapper">
-      <form class="parchment-box" id="booking-form" onsubmit="submitBooking(event)">
-        <div class="form-grid">
-          <div class="form-group">
-            <label for="res-name">Tu Nombre y Apellido</label>
-            <input type="text" id="res-name" required placeholder="Ej. Lucas Fernández" />
-          </div>
-          <div class="form-group">
-            <label for="res-phone">Teléfono / WhatsApp</label>
-            <input type="tel" id="res-phone" required placeholder="Ej. 11 5555-1234" />
-          </div>
-          <div class="form-group">
-            <label for="res-type">Experiencia / Pase</label>
-            <select id="res-type" onchange="updateBookingSummary()">
-              <!-- Opciones dinámicas -->
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="res-guests">Cantidad de Personas</label>
-            <input type="number" id="res-guests" min="1" max="20" value="2" onchange="updateBookingSummary()" />
-          </div>
-          <div class="form-group">
-            <label for="res-date">Fecha</label>
-            <input type="date" id="res-date" required onchange="updateBookingSummary()" />
-          </div>
-          <div class="form-group">
-            <label for="res-time">Turno Horario (Bloques de 3 hs)</label>
-            <select id="res-time" onchange="updateBookingSummary()">
-              <option value="14:00 a 17:00 hs">Tarde I (14:00 a 17:00 hs)</option>
-              <option value="17:30 a 20:30 hs">Tarde II / Merienda (17:30 a 20:30 hs)</option>
-              <option value="21:00 a 00:00 hs">Noche de Taberna (21:00 a 00:00 hs)</option>
-            </select>
-          </div>
-          <div class="form-group full">
-            <label for="res-notes">¿Querés reservar algún juego de la ludoteca o aclarar algo?</label>
-            <textarea id="res-notes" rows="2" placeholder="Ej. Queremos mesa cerca de enchufes o reservar Catan / mesa de D&D..."></textarea>
-          </div>
-        </div>
-        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.85rem; font-size: 1rem;">
-          📲 Confirmar Reserva por WhatsApp
-        </button>
-      </form>
-
-      <div class="parchment-box summary-box">
-        <h3>📜 Resumen de tu Reserva</h3>
-        <div class="summary-row">
-          <span>Modalidad:</span>
-          <strong id="sum-type">Pase Libre por Turno</strong>
-        </div>
-        <div class="summary-row">
-          <span>Fecha y Turno:</span>
-          <strong id="sum-datetime">A confirmar</strong>
-        </div>
-        <div class="summary-row">
-          <span>Jugadores:</span>
-          <strong id="sum-guests">2 personas</strong>
-        </div>
-        <div class="summary-row">
-          <span>Beneficio Socio VIP:</span>
-          <label style="color: var(--gold-light); font-size: 0.85rem; cursor: pointer;">
-            <input type="checkbox" id="res-vip-check" onchange="updateBookingSummary()" /> Soy Socio VIP (-20%)
-          </label>
-        </div>
-        <div class="summary-total">
-          <span>Total Estimado:</span>
-          <span id="sum-total">$7.000</span>
-        </div>
-        <p style="font-size: 0.82rem; color: var(--parchment-dark); margin-top: 0.9rem;">
-          * El pago se realiza en el local o por transferencia al confirmar disponibilidad de mesa.
+  <!-- SECCIÓN: CARTA, LUDOTECA Y TARIFAS (Fiel a los flyers) -->
+  <section id="carta" class="py-12 sm:py-16 px-4">
+    <div class="max-w-7xl mx-auto">
+      <!-- Título de Sección -->
+      <div class="text-center max-w-3xl mx-auto mb-10">
+        <span class="inline-block px-4 py-1 rounded-full bg-madera text-dorado font-display text-xs tracking-widest uppercase mb-2">
+          Pergamino de Servicios y Sabores
+        </span>
+        <h2 class="font-display font-black text-3xl sm:text-4xl lg:text-5xl text-madera-dark">
+          LUDOTECA, EVENTOS Y CAFETERÍA
+        </h2>
+        <p class="font-serif text-madera mt-2">
+          Disfrutá, jugá y saboreá nuestra cafetería de especialidad mientras explorás cientos de juegos de mesa.
         </p>
       </div>
+
+      <!-- BLOQUE 1: ACCESO A LUDOTECA Y EVENTOS (2 Columnas) -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-10">
+        <!-- Tarjeta Acceso a Ludoteca Base -->
+        <div class="textura-pergamino rounded-2xl p-6 sm:p-8 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center gap-3 border-b-2 border-madera/20 pb-4 mb-5">
+              <div class="w-12 h-12 rounded-xl bg-carmesi text-dorado flex items-center justify-center text-xl shadow">
+                <i class="fa-solid fa-dice"></i>
+              </div>
+              <div>
+                <h3 class="font-display font-black text-xl sm:text-2xl text-madera-dark">ACCESO A LUDOTECA BASE</h3>
+                <p class="text-xs sm:text-sm text-madera-light font-semibold">Catálogo diverso de juegos modernos y clásicos</p>
+              </div>
+            </div>
+
+            <div class="space-y-4">
+              <div class="flex items-center justify-between gap-4 p-3.5 rounded-xl bg-pergamino-light/80 border border-pergamino-border">
+                <div>
+                  <h4 class="font-display font-bold text-base sm:text-lg text-madera-dark">Pase Libre por Turno (3 horas)</h4>
+                  <p class="text-xs sm:text-sm text-madera">Por persona · Acceso ilimitado a los juegos de la biblioteca</p>
+                </div>
+                <div class="text-right shrink-0">
+                  <span class="font-display font-black text-xl sm:text-2xl text-carmesi">
+                    $<span class="editable-field" data-key="prices.paseLibre">3.500</span>
+                  </span>
+                </div>
+              </div>
+
+              <div class="flex items-center justify-between gap-4 p-3.5 rounded-xl bg-pergamino-light/80 border border-pergamino-border">
+                <div>
+                  <h4 class="font-display font-bold text-base sm:text-lg text-madera-dark">Pase Grupal (hasta 4 personas)</h4>
+                  <p class="text-xs sm:text-sm text-madera">Turno completo de 3 horas para toda tu mesa</p>
+                </div>
+                <div class="text-right shrink-0">
+                  <span class="font-display font-black text-xl sm:text-2xl text-carmesi">
+                    $<span class="editable-field" data-key="prices.paseGrupal">12.000</span>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-6 pt-4 border-t border-madera/15 flex justify-end">
+            <button onclick="preselectReservation('pase-libre')" class="px-5 py-2.5 rounded-xl bg-madera hover:bg-madera-light text-dorado-light font-display font-bold text-sm transition flex items-center gap-2">
+              <i class="fa-solid fa-hourglass-half"></i> Reservar Turno de Juego
+            </button>
+          </div>
+        </div>
+
+        <!-- Tarjeta Servicios Adicionales y Eventos -->
+        <div class="textura-pergamino rounded-2xl p-6 sm:p-8 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center gap-3 border-b-2 border-madera/20 pb-4 mb-5">
+              <div class="w-12 h-12 rounded-xl bg-madera text-dorado flex items-center justify-center text-xl shadow">
+                <i class="fa-solid fa-scroll"></i>
+              </div>
+              <div>
+                <h3 class="font-display font-black text-xl sm:text-2xl text-madera-dark">SERVICIOS Y EVENTOS</h3>
+                <p class="text-xs sm:text-sm text-madera-light font-semibold">Campañas de rol, torneos y jornadas a medida</p>
+              </div>
+            </div>
+
+            <div class="space-y-3.5">
+              <div class="flex items-center justify-between gap-4 p-3 rounded-xl bg-pergamino-light/80 border border-pergamino-border">
+                <div>
+                  <h4 class="font-display font-bold text-base text-madera-dark">Torneo Periódico (Inscripción)</h4>
+                  <p class="text-xs text-madera">Competencias oficiales con premios de la casa</p>
+                </div>
+                <span class="font-display font-black text-lg sm:text-xl text-carmesi shrink-0">
+                  $<span class="editable-field" data-key="prices.torneo">5.000</span>
+                </span>
+              </div>
+
+              <div class="flex items-center justify-between gap-4 p-3 rounded-xl bg-pergamino-light/80 border border-pergamino-border">
+                <div>
+                  <h4 class="font-display font-bold text-base text-madera-dark">Noche Temática de Rol (por persona)</h4>
+                  <p class="text-xs text-madera">One-shots y campañas dirigidas por nuestros Masters</p>
+                </div>
+                <span class="font-display font-black text-lg sm:text-xl text-carmesi shrink-0">
+                  $<span class="editable-field" data-key="prices.nocheRol">4.000</span>
+                </span>
+              </div>
+
+              <div class="flex items-center justify-between gap-4 p-3 rounded-xl bg-pergamino-light/80 border border-pergamino-border">
+                <div>
+                  <h4 class="font-display font-bold text-base text-madera-dark">Organización de Jornada Especial</h4>
+                  <p class="text-xs text-madera">Cumpleaños, juntadas privadas o eventos temáticos</p>
+                </div>
+                <span class="font-display font-black text-lg sm:text-xl text-carmesi shrink-0">
+                  $<span class="editable-field" data-key="prices.jornadaEspecial">8.000</span>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-6 pt-4 border-t border-madera/15 flex justify-end">
+            <button onclick="preselectReservation('noche-rol')" class="px-5 py-2.5 rounded-xl bg-carmesi hover:bg-carmesi-light text-pergamino-light font-display font-bold text-sm transition flex items-center gap-2">
+              <i class="fa-solid fa-hat-wizard"></i> Inscribirme a un Evento
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- BLOQUE 2: CARTA DE CAFÉ Y GASTRONOMÍA CON PESTAÑAS -->
+      <div class="textura-pergamino borde-doble-dorado rounded-3xl p-6 sm:p-10">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b-2 border-madera/20 pb-6 mb-6">
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 rounded-full bg-carmesi text-dorado flex items-center justify-center text-xl shadow">
+              <i class="fa-solid fa-mug-saucer"></i>
+            </div>
+            <div>
+              <h3 class="font-display font-black text-2xl sm:text-3xl text-madera-dark">CAFÉ Y GASTRONOMÍA</h3>
+              <p class="font-serif text-sm text-madera">Café molido al momento, postres caseros y snacks para acompañar tu partida</p>
+            </div>
+          </div>
+
+          <!-- Pestañas de Categorías -->
+          <div class="flex flex-wrap gap-2" id="menu-tabs">
+            <button onclick="filterMenuTab('all')" data-tab="all" class="menu-tab-btn active px-4 py-2 rounded-xl font-display font-bold text-xs sm:text-sm bg-madera text-dorado transition">
+              Carta Completa
+            </button>
+            <button onclick="filterMenuTab('cafeteria')" data-tab="cafeteria" class="menu-tab-btn px-4 py-2 rounded-xl font-display font-bold text-xs sm:text-sm bg-pergamino-dark text-madera-dark hover:bg-madera hover:text-dorado transition">
+              Cafetería
+            </button>
+            <button onclick="filterMenuTab('pasteleria')" data-tab="pasteleria" class="menu-tab-btn px-4 py-2 rounded-xl font-display font-bold text-xs sm:text-sm bg-pergamino-dark text-madera-dark hover:bg-madera hover:text-dorado transition">
+              Pastelería
+            </button>
+            <button onclick="filterMenuTab('salado')" data-tab="salado" class="menu-tab-btn px-4 py-2 rounded-xl font-display font-bold text-xs sm:text-sm bg-pergamino-dark text-madera-dark hover:bg-madera hover:text-dorado transition">
+              Almuerzos y Cenas
+            </button>
+            <button onclick="filterMenuTab('bebidas')" data-tab="bebidas" class="menu-tab-btn px-4 py-2 rounded-xl font-display font-bold text-xs sm:text-sm bg-pergamino-dark text-madera-dark hover:bg-madera hover:text-dorado transition">
+              Bebidas Frías
+            </button>
+          </div>
+        </div>
+
+        <!-- Grilla de ítems de la Carta (Renderizado dinámicamente desde JS para soportar edición en vivo) -->
+        <div id="menu-items-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <!-- Se completa vía JavaScript -->
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- FOOTER -->
-  <footer>
-    <div class="footer-grid">
-      <div>
-        <h4 id="footer-name" data-editable="siteName">MAZMORRAS Y CAFÉ</h4>
-        <p id="footer-desc" data-editable="footerDesc">
-          El punto de encuentro en San Miguel para amantes de los juegos de mesa, el rol y el buen café. ¡Jugá más, disfrutá más!
-        </p>
-      </div>
-      <div>
-        <h4>📍 Dónde Estamos</h4>
-        <p><strong>Dirección:</strong> <span id="footer-address" data-editable="address">Av. Perón, San Miguel, Buenos Aires</span></p>
-        <p><strong>Horarios:</strong> <span id="footer-hours" data-editable="hours">Mar a Dom de 14:00 a 00:00 hs</span></p>
-      </div>
-      <div>
-        <h4>📞 Contacto Directo</h4>
-        <p><strong>WhatsApp:</strong> <span id="footer-whatsapp" data-editable="whatsapp">+54 9 11 1234-5678</span></p>
-        <p><strong>Instagram:</strong> <span id="footer-ig" data-editable="instagram">@mazmorrasycafe</span></p>
-        <button class="btn btn-gold" style="margin-top: 0.6rem;" onclick="openBusinessSettings()">⚙️ Editar Datos del Local</button>
+  <!-- SECCIÓN: MEMBRESÍA SOCIO VIP -->
+  <section id="vip" class="py-10 px-4">
+    <div class="max-w-6xl mx-auto">
+      <div class="textura-madera rounded-3xl p-6 sm:p-10 lg:p-12 text-pergamino-light shadow-madera relative overflow-hidden">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          <div class="lg:col-span-8 space-y-4 text-center lg:text-left">
+            <div class="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-dorado text-madera-dark font-display font-black text-xs tracking-widest uppercase">
+              <i class="fa-solid fa-crown"></i> Membresía Exclusiva
+            </div>
+            <h2 class="font-display font-black text-3xl sm:text-4xl lg:text-5xl text-dorado">
+              MEMBRESÍA SOCIO VIP
+            </h2>
+            <p class="font-serif text-base sm:text-lg text-pergamino-light/90">
+              Convertite en aventurero leyenda de <strong>Mazmorras y Café</strong> y accedé a beneficios únicos en cada visita.
+            </p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+              <div class="p-4 rounded-2xl bg-madera-dark/80 border border-dorado/50 flex items-center gap-3.5 text-left">
+                <div class="w-11 h-11 rounded-xl bg-carmesi text-dorado flex items-center justify-center text-xl shrink-0">
+                  <i class="fa-solid fa-tag"></i>
+                </div>
+                <div>
+                  <h4 class="font-display font-bold text-dorado-light text-sm sm:text-base">Descuentos Exclusivos</h4>
+                  <p class="text-xs text-pergamino-dark">En todas las horas de juego y pases de ludoteca.</p>
+                </div>
+              </div>
+
+              <div class="p-4 rounded-2xl bg-madera-dark/80 border border-dorado/50 flex items-center gap-3.5 text-left">
+                <div class="w-11 h-11 rounded-xl bg-carmesi text-dorado flex items-center justify-center text-xl shrink-0">
+                  <i class="fa-solid fa-star"></i>
+                </div>
+                <div>
+                  <h4 class="font-display font-bold text-dorado-light text-sm sm:text-base">Zonas Especiales VIP</h4>
+                  <p class="text-xs text-pergamino-dark">Mesas temáticas prioritarias para socios VIP.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="lg:col-span-4 text-center bg-madera-dark/90 border-2 border-dorado rounded-2xl p-6 space-y-4">
+            <i class="fa-solid fa-crown text-4xl text-dorado"></i>
+            <h3 class="font-display font-bold text-xl text-pergamino-light">¿Querés ser Socio VIP?</h3>
+            <p class="text-xs sm:text-sm text-pergamino-dark">
+              Consultá por la membresía mensual y sus beneficios especiales en nuestro local o por WhatsApp.
+            </p>
+            <button onclick="preselectReservation('socio-vip')" class="w-full py-3.5 px-5 rounded-xl bg-carmesi hover:bg-carmesi-light text-pergamino-light font-display font-bold text-sm border border-dorado shadow-lg transition">
+              Consultar Membresía VIP
+            </button>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="footer-bottom">
-      © 2026 Mazmorras y Café — Todos los derechos reservados.
+  </section>
+
+  <!-- SECCIÓN: CATÁLOGO DE VENTA DE JUEGOS DE MESA -->
+  <section id="catalogo" class="py-12 sm:py-16 px-4">
+    <div class="max-w-7xl mx-auto">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
+        <div>
+          <span class="inline-block px-4 py-1 rounded-full bg-carmesi text-pergamino-light font-display text-xs tracking-widest uppercase mb-2">
+            Tienda Oficial del Gremio
+          </span>
+          <h2 class="font-display font-black text-3xl sm:text-4xl lg:text-5xl text-madera-dark">
+            CATÁLOGO DE JUEGOS DE MESA
+          </h2>
+          <p class="font-serif text-madera mt-2 max-w-2xl">
+            Llevate la aventura a tu casa. Juegos originales sellados listos para retirar por <span class="editable-field" data-key="info.address">Av. Perón, San Miguel</span> o coordinar envío.
+          </p>
+        </div>
+
+        <!-- Buscador rápido del catálogo -->
+        <div class="w-full md:w-72">
+          <div class="relative">
+            <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-madera-light"></i>
+            <input
+              type="text"
+              id="catalog-search"
+              oninput="renderCatalog()"
+              placeholder="Buscar juego (ej. Catan, TEG)..."
+              class="w-full pl-10 pr-4 py-2.5 rounded-xl bg-pergamino-light border-2 border-pergamino-border focus:border-carmesi focus:outline-none text-madera-dark text-sm"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Grilla de Juegos en Venta -->
+      <div id="catalog-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+        <!-- Renderizado dinámicamente desde JavaScript -->
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN: RESERVAS DE TURNOS Y EVENTOS -->
+  <section id="reservas" class="py-12 sm:py-16 px-4">
+    <div class="max-w-5xl mx-auto">
+      <div class="textura-pergamino borde-doble-dorado rounded-3xl p-6 sm:p-10 lg:p-12">
+        <div class="text-center max-w-2xl mx-auto mb-8">
+          <span class="inline-block px-4 py-1 rounded-full bg-madera text-dorado font-display text-xs tracking-widest uppercase mb-2">
+            Asegurá tu Mesa
+          </span>
+          <h2 class="font-display font-black text-3xl sm:text-4xl text-madera-dark">
+            RESERVÁ TU TURNO O EVENTO
+          </h2>
+          <p class="font-serif text-madera mt-2">
+            Completá los datos de tu partida y confirmá al instante. Turnos de 3 horas de pura diversión.
+          </p>
+        </div>
+
+        <form id="reservation-form" onsubmit="handleReservationSubmit(event)" class="space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <!-- Tipo de Reserva -->
+            <div>
+              <label for="res-type" class="block font-display font-bold text-sm text-madera-dark mb-1.5">
+                Tipo de Experiencia / Evento *
+              </label>
+              <select
+                id="res-type"
+                onchange="updateReservationEstimate()"
+                required
+                class="w-full px-4 py-3 rounded-xl bg-pergamino-light border-2 border-pergamino-border focus:border-carmesi focus:outline-none text-madera-dark font-semibold"
+              >
+                <option value="pase-libre">Pase Libre por Turno - 3hs (por persona)</option>
+                <option value="pase-grupal">Pase Grupal - 3hs (hasta 4 personas)</option>
+                <option value="torneo">Inscripción Torneo Periódico</option>
+                <option value="noche-rol">Noche Temática de Rol (por persona)</option>
+                <option value="jornada-especial">Organización de Jornada Especial</option>
+                <option value="socio-vip">Consulta Membresía Socio VIP</option>
+              </select>
+            </div>
+
+            <!-- Cantidad de Personas -->
+            <div>
+              <label for="res-guests" class="block font-display font-bold text-sm text-madera-dark mb-1.5">
+                Cantidad de Aventureros (Personas) *
+              </label>
+              <input
+                type="number"
+                id="res-guests"
+                min="1"
+                max="20"
+                value="2"
+                oninput="updateReservationEstimate()"
+                required
+                class="w-full px-4 py-3 rounded-xl bg-pergamino-light border-2 border-pergamino-border focus:border-carmesi focus:outline-none text-madera-dark font-semibold"
+              />
+            </div>
+
+            <!-- Fecha -->
+            <div>
+              <label for="res-date" class="block font-display font-bold text-sm text-madera-dark mb-1.5">
+                Fecha de Visita *
+              </label>
+              <input
+                type="date"
+                id="res-date"
+                required
+                class="w-full px-4 py-3 rounded-xl bg-pergamino-light border-2 border-pergamino-border focus:border-carmesi focus:outline-none text-madera-dark font-semibold"
+              />
+            </div>
+
+            <!-- Franja Horaria -->
+            <div>
+              <label for="res-time" class="block font-display font-bold text-sm text-madera-dark mb-1.5">
+                Turno (Bloques de 3 horas) *
+              </label>
+              <select
+                id="res-time"
+                required
+                class="w-full px-4 py-3 rounded-xl bg-pergamino-light border-2 border-pergamino-border focus:border-carmesi focus:outline-none text-madera-dark font-semibold"
+              >
+                <option value="15:00 a 18:00 hs (Tarde de Café y Juegos)">15:00 a 18:00 hs (Tarde de Café y Juegos)</option>
+                <option value="18:00 a 21:00 hs (Tarde-Noche)">18:00 a 21:00 hs (Tarde-Noche)</option>
+                <option value="21:00 a 00:00 hs (Noche de Mazmorras y Rol)">21:00 a 00:00 hs (Noche de Mazmorras y Rol)</option>
+              </select>
+            </div>
+
+            <!-- Nombre Completo -->
+            <div>
+              <label for="res-name" class="block font-display font-bold text-sm text-madera-dark mb-1.5">
+                Tu Nombre o Apodo de Jugador *
+              </label>
+              <input
+                type="text"
+                id="res-name"
+                placeholder="Ej. Lucas / Gandalf"
+                required
+                class="w-full px-4 py-3 rounded-xl bg-pergamino-light border-2 border-pergamino-border focus:border-carmesi focus:outline-none text-madera-dark"
+              />
+            </div>
+
+            <!-- Teléfono / WhatsApp -->
+            <div>
+              <label for="res-phone" class="block font-display font-bold text-sm text-madera-dark mb-1.5">
+                Teléfono / WhatsApp de Contacto *
+              </label>
+              <input
+                type="tel"
+                id="res-phone"
+                placeholder="Ej. 11 1234-5678"
+                required
+                class="w-full px-4 py-3 rounded-xl bg-pergamino-light border-2 border-pergamino-border focus:border-carmesi focus:outline-none text-madera-dark"
+              />
+            </div>
+          </div>
+
+          <!-- Juego Preferido y Notas -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div>
+              <label for="res-game" class="block font-display font-bold text-sm text-madera-dark mb-1.5">
+                ¿Qué juego te gustaría tener reservado? (Opcional)
+              </label>
+              <input
+                type="text"
+                id="res-game"
+                placeholder="Ej. Catan, Carcassonne, D&D, T.E.G..."
+                class="w-full px-4 py-3 rounded-xl bg-pergamino-light border-2 border-pergamino-border focus:border-carmesi focus:outline-none text-madera-dark"
+              />
+            </div>
+            <div>
+              <label for="res-notes" class="block font-display font-bold text-sm text-madera-dark mb-1.5">
+                Comentarios adicionales (Opcional)
+              </label>
+              <input
+                type="text"
+                id="res-notes"
+                placeholder="Ej. Cumpleaños, mesa grande, alergias..."
+                class="w-full px-4 py-3 rounded-xl bg-pergamino-light border-2 border-pergamino-border focus:border-carmesi focus:outline-none text-madera-dark"
+              />
+            </div>
+          </div>
+
+          <!-- Resumen Estimado + Botón Confirmar -->
+          <div class="p-5 rounded-2xl bg-madera text-pergamino-light border-2 border-dorado flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div>
+              <span class="text-xs uppercase tracking-widest text-dorado font-display block">Total Estimado de la Reserva</span>
+              <span id="res-estimate-total" class="font-display font-black text-3xl text-pergamino-light">$7.000</span>
+              <span id="res-estimate-detail" class="block text-xs text-pergamino-dark mt-0.5">2 personas × $3.500 (Pase Libre 3hs)</span>
+            </div>
+
+            <button
+              type="submit"
+              class="w-full sm:w-auto px-8 py-4 rounded-xl bg-carmesi hover:bg-carmesi-light text-pergamino-light font-display font-bold text-base tracking-wider border-2 border-dorado shadow-lg transition flex items-center justify-center gap-2"
+            >
+              <i class="fa-brands fa-whatsapp text-xl text-dorado"></i>
+              Confirmar y Enviar Reserva
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER / UBICACIÓN Y CONTACTO -->
+  <footer id="contacto" class="mt-auto textura-madera text-pergamino-light border-x-0 border-b-0 pt-12 pb-8 px-4">
+    <div class="max-w-7xl mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 pb-8 border-b border-dorado/30">
+        <!-- Columna 1: Marca -->
+        <div class="space-y-3">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-carmesi border border-dorado flex items-center justify-center text-dorado">
+              <i class="fa-solid fa-dragon"></i>
+            </div>
+            <h3 class="font-display font-black text-xl text-dorado editable-field" data-key="info.brandName">MAZMORRAS Y CAFÉ</h3>
+          </div>
+          <p class="font-serif text-sm text-pergamino-dark leading-relaxed">
+            Tu punto de encuentro en San Miguel para disfrutar del mejor café de especialidad, pastelería artesanal y una ludoteca épica.
+          </p>
+        </div>
+
+        <!-- Columna 2: Dirección y Horarios (Editables) -->
+        <div class="space-y-3">
+          <h4 class="font-display font-bold text-dorado tracking-wider uppercase text-sm">Dónde Estamos</h4>
+          <ul class="space-y-2 text-sm">
+            <li class="flex items-start gap-2.5">
+              <i class="fa-solid fa-location-dot text-dorado mt-1"></i>
+              <span class="editable-field" data-key="info.address">Av. Perón, San Miguel</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <i class="fa-solid fa-clock text-dorado mt-1"></i>
+              <span class="editable-field" data-key="info.hours">Martes a Domingos de 15:00 a 00:00 hs</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <i class="fa-brands fa-whatsapp text-dorado mt-1"></i>
+              <span class="editable-field" data-key="info.whatsapp">+54 9 11 5555-1234</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Columna 3: Redes y Contacto Directo (Editables) -->
+        <div class="space-y-3">
+          <h4 class="font-display font-bold text-dorado tracking-wider uppercase text-sm">Comunidad del Gremio</h4>
+          <ul class="space-y-2 text-sm">
+            <li class="flex items-center gap-2.5">
+              <i class="fa-brands fa-instagram text-dorado"></i>
+              <span class="editable-field" data-key="info.instagram">@mazmorrasycafe</span>
+            </li>
+            <li class="flex items-center gap-2.5">
+              <i class="fa-solid fa-envelope text-dorado"></i>
+              <span class="editable-field" data-key="info.email">contacto@mazmorrasycafe.com.ar</span>
+            </li>
+          </ul>
+          <div class="pt-2">
+            <button onclick="openWhatsAppGeneral()" class="px-5 py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-600 text-white font-bold text-sm transition inline-flex items-center gap-2 shadow">
+              <i class="fa-brands fa-whatsapp text-lg"></i> Escribinos por WhatsApp
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-pergamino-dark">
+        <p>© 2026 <span class="editable-field" data-key="info.brandName">Mazmorras y Café</span> · Todos los derechos reservados.</p>
+        <p class="font-display text-dorado">¡Jugá más, disfrutá más!</p>
+      </div>
     </div>
   </footer>
 
-  <!-- NAVEGACIÓN INFERIOR MÓVIL -->
-  <div class="mobile-bar">
-    <a href="#ludoteca">🎲<span>Pases</span></a>
-    <a href="#carta">☕<span>Carta</span></a>
-    <a href="#catalogo">🛒<span>Tienda</span></a>
-    <a href="#reservas">📅<span>Reservar</span></a>
-    <a href="javascript:void(0)" onclick="toggleEditMode()">✏️<span>Editar</span></a>
-  </div>
-
-  <!-- CARRITO LATERAL -->
-  <div class="drawer-backdrop" id="cart-drawer" onclick="if(event.target===this) closeCart()">
-    <div class="drawer">
-      <div class="drawer-header">
-        <h3>🛒 Tu Pedido de Juegos</h3>
-        <button class="btn btn-outline" style="padding: 0.25rem 0.6rem;" onclick="closeCart()">✕</button>
-      </div>
-      <div class="drawer-body" id="cart-items"></div>
-      <div class="drawer-footer">
-        <div style="display:flex; justify-content:space-between; font-family:'Cinzel',serif; font-weight:800; font-size:1.2rem; margin-bottom:0.8rem;">
-          <span>Total:</span>
-          <span id="cart-total">$0</span>
+  <!-- MODAL / DRAWER CARRITO DE COMPRAS -->
+  <div id="cart-modal" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex justify-end">
+    <div class="w-full max-w-md bg-pergamino h-full flex flex-col border-l-4 border-dorado shadow-2xl">
+      <!-- Header Carrito -->
+      <div class="textura-madera text-pergamino-light p-5 flex items-center justify-between border-b-2 border-dorado">
+        <div class="flex items-center gap-2.5">
+          <i class="fa-solid fa-cart-shopping text-dorado text-xl"></i>
+          <h3 class="font-display font-bold text-lg text-dorado">Tu Botín de Juegos</h3>
         </div>
-        <button class="btn btn-primary" style="width:100%;" onclick="checkoutCart()">
-          📲 Finalizar Compra por WhatsApp
+        <button onclick="toggleCartModal(false)" class="w-9 h-9 rounded-lg bg-madera-light hover:bg-carmesi text-pergamino-light flex items-center justify-center transition">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- Lista de Productos en el Carrito -->
+      <div id="cart-items-container" class="flex-1 overflow-y-auto p-5 space-y-4">
+        <!-- Renderizado dinámico -->
+      </div>
+
+      <!-- Footer Carrito -->
+      <div class="p-5 bg-pergamino-dark border-t-2 border-pergamino-border space-y-4">
+        <div class="flex items-center justify-between">
+          <span class="font-display font-bold text-madera-dark">Total del Pedido:</span>
+          <span id="cart-total-amount" class="font-display font-black text-2xl text-carmesi">$0</span>
+        </div>
+        <p class="text-xs text-madera">
+          Retiro sin cargo por <strong><span class="editable-field" data-key="info.address">Av. Perón, San Miguel</span></strong> o envío a coordinar por WhatsApp.
+        </p>
+        <button
+          onclick="checkoutCartWhatsApp()"
+          id="btn-checkout-cart"
+          class="w-full py-3.5 px-5 rounded-xl bg-carmesi hover:bg-carmesi-light text-pergamino-light font-display font-bold text-sm tracking-wider border-2 border-dorado shadow-lg transition flex items-center justify-center gap-2"
+        >
+          <i class="fa-brands fa-whatsapp text-lg text-dorado"></i>
+          Finalizar Compra por WhatsApp
         </button>
       </div>
     </div>
   </div>
 
-  <!-- MODAL EDITAR DATOS DEL NEGOCIO -->
-  <div class="modal-backdrop" id="business-modal" onclick="if(event.target===this) closeModal('business-modal')">
-    <div class="modal-card">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
-        <h3>⚙️ Editar Datos Personales y del Local</h3>
-        <button class="btn btn-primary" style="padding:0.25rem 0.6rem;" onclick="closeModal('business-modal')">✕</button>
+  <!-- MODAL AGREGAR NUEVO JUEGO (Modo Edición) -->
+  <div id="add-game-modal" class="hidden fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="textura-pergamino border-4 border-dorado rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl">
+      <div class="flex items-center justify-between border-b border-madera/20 pb-3 mb-5">
+        <h3 class="font-display font-black text-xl text-madera-dark">Agregar Juego al Catálogo</h3>
+        <button onclick="closeAddGameModal()" class="text-madera-dark hover:text-carmesi text-xl">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
       </div>
-      <form onsubmit="saveBusinessSettings(event)">
-        <div class="form-grid">
-          <div class="form-group">
-            <label>Nombre del Emprendimiento</label>
-            <input type="text" id="cfg-name" required />
+
+      <form onsubmit="handleAddNewGame(event)" class="space-y-4">
+        <div>
+          <label class="block font-display font-bold text-xs text-madera-dark mb-1">Nombre del Juego *</label>
+          <input type="text" id="new-game-name" required placeholder="Ej. Carcassonne" class="w-full px-3.5 py-2.5 rounded-xl bg-pergamino-light border border-pergamino-border text-madera-dark" />
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-display font-bold text-xs text-madera-dark mb-1">Precio en ARS (sin puntos) *</label>
+            <input type="number" id="new-game-price" required placeholder="Ej. 75000" class="w-full px-3.5 py-2.5 rounded-xl bg-pergamino-light border border-pergamino-border text-madera-dark" />
           </div>
-          <div class="form-group">
-            <label>WhatsApp (con código país, ej: 54911...)</label>
-            <input type="text" id="cfg-whatsapp" required />
-          </div>
-          <div class="form-group">
-            <label>Dirección Completa</label>
-            <input type="text" id="cfg-address" required />
-          </div>
-          <div class="form-group">
-            <label>Instagram</label>
-            <input type="text" id="cfg-ig" />
-          </div>
-          <div class="form-group full">
-            <label>Horarios de Atención</label>
-            <input type="text" id="cfg-hours" />
-          </div>
-          <div class="form-group full">
-            <label>Título Principal (Hero)</label>
-            <input type="text" id="cfg-hero-title" />
-          </div>
-          <div class="form-group full">
-            <label>Subtítulo / Descripción</label>
-            <textarea id="cfg-hero-sub" rows="2"></textarea>
+          <div>
+            <label class="block font-display font-bold text-xs text-madera-dark mb-1">Jugadores / Edad *</label>
+            <input type="text" id="new-game-players" required placeholder="Ej. 2-5 jug. · +7 años" class="w-full px-3.5 py-2.5 rounded-xl bg-pergamino-light border border-pergamino-border text-madera-dark" />
           </div>
         </div>
-        <div style="display:flex; gap:0.75rem; justify-content:flex-end; margin-top:1rem;">
-          <button type="button" class="btn btn-outline" style="color:var(--ink);" onclick="closeModal('business-modal')">Cancelar</button>
-          <button type="submit" class="btn btn-primary">💾 Guardar Cambios</button>
+        <div>
+          <label class="block font-display font-bold text-xs text-madera-dark mb-1">URL de Imagen (opcional)</label>
+          <input type="url" id="new-game-img" placeholder="https://..." class="w-full px-3.5 py-2.5 rounded-xl bg-pergamino-light border border-pergamino-border text-madera-dark" />
+        </div>
+        <div>
+          <label class="block font-display font-bold text-xs text-madera-dark mb-1">Descripción Breve *</label>
+          <textarea id="new-game-desc" rows="2" required placeholder="Construí ciudades medievales, caminos y monasterios..." class="w-full px-3.5 py-2.5 rounded-xl bg-pergamino-light border border-pergamino-border text-madera-dark"></textarea>
+        </div>
+
+        <div class="flex justify-end gap-3 pt-2">
+          <button type="button" onclick="closeAddGameModal()" class="px-4 py-2.5 rounded-xl bg-pergamino-dark text-madera-dark font-bold text-sm">Cancelar</button>
+          <button type="submit" class="px-6 py-2.5 rounded-xl bg-carmesi text-pergamino-light font-display font-bold text-sm border border-dorado">Guardar Juego</button>
         </div>
       </form>
     </div>
   </div>
 
-  <!-- MODAL AGREGAR / EDITAR JUEGO -->
-  <div class="modal-backdrop" id="game-modal" onclick="if(event.target===this) closeModal('game-modal')">
-    <div class="modal-card">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
-        <h3>🎲 Agregar Juego al Catálogo</h3>
-        <button class="btn btn-primary" style="padding:0.25rem 0.6rem;" onclick="closeModal('game-modal')">✕</button>
+  <!-- NOTIFICACIÓN TOAST / MODAL DE CONFIRMACIÓN PERSONALIZADO (Sin alert) -->
+  <div id="toast-box" class="fixed bottom-5 right-5 z-50 hidden max-w-sm w-full textura-madera text-pergamino-light p-4 rounded-2xl shadow-2xl border-2 border-dorado transition-all">
+    <div class="flex items-start gap-3">
+      <div id="toast-icon" class="w-9 h-9 rounded-full bg-dorado text-madera-dark flex items-center justify-center shrink-0 font-bold">
+        <i class="fa-solid fa-check"></i>
       </div>
-      <form onsubmit="saveNewGame(event)">
-        <div class="form-grid">
-          <div class="form-group">
-            <label>Nombre del Juego</label>
-            <input type="text" id="new-game-name" required placeholder="Ej. Carcassonne" />
-          </div>
-          <div class="form-group">
-            <label>Precio ($ ARS)</label>
-            <input type="number" id="new-game-price" required placeholder="Ej. 65000" />
-          </div>
-          <div class="form-group">
-            <label>Jugadores / Edad</label>
-            <input type="text" id="new-game-meta" placeholder="Ej. 2-5 jugadores • +7 años" />
-          </div>
-          <div class="form-group">
-            <label>URL de Imagen (opcional)</label>
-            <input type="url" id="new-game-img" placeholder="https://..." />
-          </div>
-          <div class="form-group full">
-            <label>Descripción corta</label>
-            <textarea id="new-game-desc" rows="2" required placeholder="Breve descripción del juego..."></textarea>
-          </div>
-        </div>
-        <div style="display:flex; gap:0.75rem; justify-content:flex-end; margin-top:1rem;">
-          <button type="button" class="btn btn-outline" style="color:var(--ink);" onclick="closeModal('game-modal')">Cancelar</button>
-          <button type="submit" class="btn btn-primary">➕ Agregar al Catálogo</button>
-        </div>
-      </form>
+      <div class="flex-1">
+        <h4 id="toast-title" class="font-display font-bold text-dorado text-sm">¡Listo!</h4>
+        <p id="toast-message" class="text-xs text-pergamino-light mt-1 leading-relaxed"></p>
+        <div id="toast-action-container" class="mt-2.5 hidden"></div>
+      </div>
+      <button onclick="hideToast()" class="text-pergamino-dark hover:text-dorado">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
     </div>
   </div>
 
+  <!-- JAVASCRIPT COMPLETO -->
   <script>
-    // DATOS POR DEFECTO BASADOS EN LOS FLYERS Y PRECIOS DE ARGENTINA
-    const DEFAULT_DATA = {
-      business: {
-        siteName: "MAZMORRAS Y CAFÉ",
-        locationShort: "Av. Perón, San Miguel",
-        address: "Av. Perón, San Miguel, Buenos Aires",
-        whatsapp: "5491112345678",
-        instagram: "@mazmorrasycafe",
-        hours: "Martes a Domingos de 14:00 a 00:00 hs",
-        heroTitle: "¡Vení a Jugar, Saborear y Conquistar!",
-        heroSubtitle: "Acceso a una gran ludoteca, torneos periódicos, noches temáticas de rol y cafetería de especialidad molida al momento en San Miguel.",
-        footerDesc: "El punto de encuentro en San Miguel para amantes de los juegos de mesa, el rol y el buen café. ¡Jugá más, disfrutá más!"
+    /**
+     * ESTADO INICIAL POR DEFECTO DE MAZMORRAS Y CAFÉ
+     * Basado fielmente en los flyers y precios de mercado en Argentina.
+     */
+    const DEFAULT_STATE = {
+      info: {
+        brandName: 'MAZMORRAS Y CAFÉ',
+        slogan: '¡JUGÁ MÁS, DISFRUTÁ MÁS!',
+        address: 'Av. Perón, San Miguel',
+        hours: 'Martes a Domingos de 15:00 a 00:00 hs',
+        whatsapp: '+54 9 11 5555-1234',
+        instagram: '@mazmorrasycafe',
+        email: 'contacto@mazmorrasycafe.com.ar',
+        heroDesc:
+          'Vení a disfrutar de una rica gastronomía en un momento de gran diversión. Accedé a nuestra ludoteca con cientos de títulos, cafés de especialidad, pastelería casera, noches temáticas de rol y tienda oficial de juegos de mesa.',
       },
-      passes: [
-        { id: "pase-libre", tag: "Ludoteca Base", name: "Pase Libre por Turno (3 hs)", price: 3500, perPerson: true, desc: "Acceso ilimitado durante 3 horas a nuestro catálogo diverso de juegos de mesa por persona." },
-        { id: "pase-grupal", tag: "Ideal Amigos", name: "Pase Grupal (hasta 4 personas)", price: 12000, perPerson: false, desc: "Turno completo de 3 horas de acceso a la ludoteca base para un grupo de hasta 4 jugadores." },
-        { id: "noche-rol", tag: "Evento Especial", name: "Noche Temática de Rol", price: 4000, perPerson: true, desc: "Partidas guiadas de rol con ambientación inmersiva. Valor por persona." },
-        { id: "torneo", tag: "Competencia", name: "Torneo Periódico (Inscripción)", price: 5000, perPerson: true, desc: "Participá de nuestros torneos oficiales con premios y gloria en la taberna." },
-        { id: "jornada", tag: "A Medida", name: "Organización de Jornada Especial", price: 8000, perPerson: false, desc: "Armado y coordinación de mesas para cumpleaños, juntadas o eventos privados." },
-        { id: "vip", tag: "👑 Membresía", name: "Socio VIP Mazmorras", price: 15000, perPerson: true, vip: true, desc: "Descuentos exclusivos en las horas de juego, acceso a zonas especiales VIP y prioridad en torneos." }
-      ],
+      prices: {
+        paseLibre: 3500,
+        paseGrupal: 12000,
+        torneo: 5000,
+        nocheRol: 4000,
+        jornadaEspecial: 8000,
+      },
       menu: [
-        { id: "m1", cat: "cafeteria", name: "Pocillo de Café", note: "Café molido al momento", price: 1900 },
-        { id: "m2", cat: "cafeteria", name: "Espresso Simple", note: "Intenso y aromático", price: 1800 },
-        { id: "m3", cat: "cafeteria", name: "Lágrima", note: "Suave con leche espumada", price: 2000 },
-        { id: "m4", cat: "cafeteria", name: "Cortado", note: "Clásico de especialidad", price: 2100 },
-        { id: "m5", cat: "cafeteria", name: "Café Doble", note: "Doble carga para partidas largas", price: 2500 },
-        { id: "m6", cat: "cafeteria", name: "Café con Leche", note: "Taza grande artesanal", price: 2800 },
-        { id: "m7", cat: "cafeteria", name: "Submarino", note: "Leche caliente con barra de chocolate", price: 2900 },
-        { id: "m8", cat: "cafeteria", name: "Cappuccino Temático", note: "Con arte latte y cacao", price: 3300 },
-        { id: "m9", cat: "cafeteria", name: "Té de Especialidad", note: "Hebras seleccionadas", price: 1800 },
-        { id: "m10", cat: "cafeteria", name: "Licuado", note: "Frutas de estación", price: 2800 },
-        { id: "m11", cat: "pasteleria", name: "Medialuna de Manteca (x unidad)", note: "Horneada del día", price: 1200 },
-        { id: "m12", cat: "pasteleria", name: "Cookies Temáticas", note: "Con chips y diseños de rol", price: 1500 },
-        { id: "m13", cat: "pasteleria", name: "Torta del Día (porción)", note: "Pastelería casera artesanal", price: 4500 },
-        { id: "m14", cat: "salado", name: "Tostado Industrial de Jamón y Queso", note: "Crujiente y caliente", price: 5200 },
-        { id: "m15", cat: "salado", name: "Sándwich Gourmet", note: "Pan artesanal e ingredientes frescos", price: 7800 },
-        { id: "m16", cat: "salado", name: "Tabla de Fiambres (para compartir)", note: "Selección de quesos, fiambres y panes", price: 12500 },
-        { id: "m17", cat: "bebidas", name: "Agua Saborizada", note: "Botella individual", price: 1400 },
-        { id: "m18", cat: "bebidas", name: "Gaseosa (línea regular)", note: "Bien fría", price: 1600 },
-        { id: "m19", cat: "bebidas", name: "Jugo Natural", note: "Exprimido fresco", price: 2200 }
+        // Cafetería de especialidad
+        { id: 'm1', category: 'cafeteria', name: 'Pocillo de Café', desc: 'Café molido al momento', price: 1900 },
+        { id: 'm2', category: 'cafeteria', name: 'Café Doble', desc: 'Intensidad doble de especialidad', price: 2500 },
+        { id: 'm3', category: 'cafeteria', name: 'Café con Leche', desc: 'Clásico cremoso en taza grande', price: 2800 },
+        { id: 'm4', category: 'cafeteria', name: 'Cappuccino Temático', desc: 'Espuma aterciopelada con arte meeple/cacao', price: 3300 },
+        { id: 'm5', category: 'cafeteria', name: 'Cortado', desc: 'Espresso equilibrado con un toque de leche', price: 2100 },
+        { id: 'm6', category: 'cafeteria', name: 'Licuado', desc: 'Frutas frescas de estación (agua o leche)', price: 2800 },
+        { id: 'm7', category: 'cafeteria', name: 'Espresso Simple', desc: 'Extracción pura y aromática', price: 1800 },
+        { id: 'm8', category: 'cafeteria', name: 'Lágrima', desc: 'Leche texturizada con un toque de café', price: 2000 },
+        { id: 'm9', category: 'cafeteria', name: 'Submarino', desc: 'Leche caliente con barra de chocolate artesanal', price: 2900 },
+        { id: 'm10', category: 'cafeteria', name: 'Té de Especialidad', desc: 'Hebras seleccionadas en tetera', price: 1800 },
+        // Pastelería seleccionada
+        { id: 'm11', category: 'pasteleria', name: 'Medialuna de Manteca (x unidad)', desc: 'Hojaldrada y dorada al horno', price: 1200 },
+        { id: 'm12', category: 'pasteleria', name: 'Torta del Día (porción)', desc: 'Pastelería casera artesanal', price: 4500 },
+        { id: 'm13', category: 'pasteleria', name: 'Cookies Temáticas', desc: 'Con chips de chocolate y forma de meeple', price: 1500 },
+        // Almuerzos y cenas ligeras
+        { id: 'm14', category: 'salado', name: 'Tostado de Jamón y Queso', desc: 'Pan de miga crocante bien cargado', price: 5200 },
+        { id: 'm15', category: 'salado', name: 'Sándwich Gourmet', desc: 'Pan artesanal, fiambres seleccionados y aderezo', price: 7800 },
+        { id: 'm16', category: 'salado', name: 'Tabla de Fiambres (para compartir)', desc: 'Ideal para acompañar una partida larga', price: 12500 },
+        // Bebidas frías comerciales
+        { id: 'm17', category: 'bebidas', name: 'Gaseosa (línea regular)', desc: 'Lata / Botella bien fría', price: 1600 },
+        { id: 'm18', category: 'bebidas', name: 'Agua Saborizada', desc: 'Variedad de sabores refrescantes', price: 1400 },
+        { id: 'm19', category: 'bebidas', name: 'Jugo Natural', desc: 'Exprimido fresco del día', price: 2200 },
       ],
-      games: [
+      catalog: [
         {
-          id: "g-monopoly",
-          name: "Monopoly Clásico",
-          price: 54900,
-          meta: "2-6 jugadores • +8 años",
-          desc: "El clásico juego de compraventa de propiedades, negociación y estrategia financiera para toda la familia.",
-          img: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Monopoly_board_on_white_bg.jpg/640px-Monopoly_board_on_white_bg.jpg"
+          id: 'g-monopoly',
+          name: 'Monopoly Clásico (Hasbro)',
+          players: '2 a 6 jugadores · +8 años',
+          price: 69990,
+          badge: 'Clásico Familiar',
+          desc: 'El legendario juego de operaciones inmobiliarias. Comprá propiedades, construí casas y hoteles y llevá a tus rivales a la bancarrota.',
+          image: 'https://images.unsplash.com/photo-1611371805429-8b5c1b2c34ba?auto=format&fit=crop&w=800&q=80',
+          themeColor: '#1b5e20',
+          icon: 'fa-solid fa-building-columns',
         },
         {
-          id: "g-catan",
-          name: "Catan (Juego Base)",
-          price: 82500,
-          meta: "3-4 jugadores • +10 años",
-          desc: "Colonizá la isla de Catan comerciando recursos, construyendo caminos y fundando ciudades.",
-          img: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Catan-2015-boxart.jpg/640px-Catan-2015-boxart.jpg"
+          id: 'g-catan',
+          name: 'Catan: El Juego (Devir)',
+          players: '3 a 4 jugadores · +10 años',
+          price: 128900,
+          badge: 'Más Vendido',
+          desc: 'Colonizá la isla de Catan recolectando madera, ladrillo, lana, trigo y mineral. Comerciá con otros jugadores y expandí tus poblados.',
+          image: 'https://images.unsplash.com/photo-1632501641765-e568d28b0015?auto=format&fit=crop&w=800&q=80',
+          themeColor: '#b45309',
+          icon: 'fa-solid fa-wheat-awn',
         },
         {
-          id: "g-clue",
-          name: "Clue (El Juego de la Sospecha)",
-          price: 49500,
-          meta: "2-6 jugadores • +8 años",
-          desc: "Convertite en detective y descubrí quién cometió el crimen, con qué arma y en qué habitación de la mansión.",
-          img: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Cluedo_board.jpg/640px-Cluedo_board.jpg"
+          id: 'g-clue',
+          name: 'Clue: El Juego de Misterio',
+          players: '2 a 6 jugadores · +8 años',
+          price: 94990,
+          badge: 'Deducción',
+          desc: 'Un crimen en la mansión Tudor. Investigá las habitaciones, interrogá sospechosos y descubrí quién lo hizo, con qué arma y dónde.',
+          image: 'https://images.unsplash.com/photo-1585504198199-20277593b94f?auto=format&fit=crop&w=800&q=80',
+          themeColor: '#581c87',
+          icon: 'fa-solid fa-magnifying-glass',
         },
         {
-          id: "g-hdp",
-          name: "H.D.P. (Hasta Donde Puedas)",
-          price: 34900,
-          meta: "4-12 jugadores • +18 años",
-          desc: "El juego de cartas argentino más irreverente y ácido para reírse sin filtros en previas y reuniones.",
-          img: ""
+          id: 'g-hdp',
+          name: 'H.D.P. (Hasta Donde Puedas)',
+          players: '4 a 12 jugadores · +18 años',
+          price: 44990,
+          badge: 'Party Game',
+          desc: 'El juego de humor negro y cartas más irreverente de Argentina. Combiná respuestas políticamente incorrectas para ganar cada ronda.',
+          image: 'https://images.unsplash.com/photo-1606167668584-78701c57f13d?auto=format&fit=crop&w=800&q=80',
+          themeColor: '#18181b',
+          icon: 'fa-solid fa-masks-theater',
         },
         {
-          id: "g-teg",
-          name: "T.E.G. (Plan Táctico y Estratégico)",
-          price: 68900,
-          meta: "2-6 jugadores • +10 años",
-          desc: "El legendario juego argentino de estrategia militar, conquista de países y objetivos secretos.",
-          img: ""
-        }
-      ]
+          id: 'g-teg',
+          name: 'T.E.G. Clásico (Yetem)',
+          players: '2 a 6 jugadores · +10 años',
+          price: 78900,
+          badge: 'Estrategia Épica',
+          desc: 'Plan Táctico y Estratégico de la Guerra. Conquistá países, cumplí tu objetivo secreto y dominá el mapamundi a fuerza de dados.',
+          image: 'https://images.unsplash.com/photo-1529699211952-734e80c4d42b?auto=format&fit=crop&w=800&q=80',
+          themeColor: '#8b1e1e',
+          icon: 'fa-solid fa-earth-americas',
+        },
+      ],
     };
 
-    // Generar SVG ilustrado elegante de respaldo para cajas sin foto externa
-    function getFallbackSVG(title, color1, color2, icon) {
-      const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='320' height='220' viewBox='0 0 320 220'>
-        <defs>
-          <linearGradient id='g' x1='0' y1='0' x2='1' y2='1'>
-            <stop offset='0%' stop-color='${color1}'/>
-            <stop offset='100%' stop-color='${color2}'/>
-          </linearGradient>
-        </defs>
-        <rect width='320' height='220' rx='12' fill='url(#g)'/>
-        <rect x='10' y='10' width='300' height='200' rx='8' fill='none' stroke='#f3c65f' stroke-width='2.5'/>
-        <text x='160' y='95' font-size='48' text-anchor='middle' fill='#fff'>${icon}</text>
-        <text x='160' y='145' font-family='Georgia, serif' font-weight='bold' font-size='22' text-anchor='middle' fill='#f3c65f'>${title}</text>
-        <text x='160' y='172' font-family='Georgia, serif' font-size='12' text-anchor='middle' fill='#fbf6eb'>EDICIÓN LUDOTECA</text>
-      </svg>`;
-      return "data:image/svg+xml;utf8," + encodeURIComponent(svg);
+    // Estado en memoria sincronizado con localStorage
+    let appState = loadAppState();
+    let cart = [];
+    let isAdminMode = false;
+    let currentMenuTab = 'all';
+
+    /**
+     * Carga el estado desde localStorage o usa los valores por defecto
+     */
+    function loadAppState() {
+      try {
+        const saved = localStorage.getItem('mazmorras_cafe_state_v1');
+        if (saved) {
+          return JSON.parse(saved);
+        }
+      } catch (e) {
+        console.warn('No se pudo leer localStorage:', e);
+      }
+      return JSON.parse(JSON.stringify(DEFAULT_STATE));
     }
 
-    DEFAULT_DATA.games[3].img = getFallbackSVG("H.D.P.", "#1a1a1a", "#3d1414", "🃏");
-    DEFAULT_DATA.games[4].img = getFallbackSVG("T.E.G.", "#1e3a2f", "#2c1a12", "🌍");
-
-    let appData = JSON.parse(localStorage.getItem("mazmorras_data_v1")) || structuredClone(DEFAULT_DATA);
-    let cart = JSON.parse(localStorage.getItem("mazmorras_cart_v1")) || [];
-    let isEditMode = false;
-    let currentMenuFilter = "todos";
-
-    function saveData() {
-      localStorage.setItem("mazmorras_data_v1", JSON.stringify(appData));
+    /**
+     * Guarda el estado actual en localStorage
+     */
+    function saveAppState() {
+      try {
+        localStorage.setItem('mazmorras_cafe_state_v1', JSON.stringify(appState));
+      } catch (e) {
+        console.warn('No se pudo guardar en localStorage:', e);
+      }
     }
 
-    function saveCart() {
-      localStorage.setItem("mazmorras_cart_v1", JSON.stringify(cart));
-      updateCartBadge();
-    }
-
+    /**
+     * Formatea números como moneda ARS ($3.500)
+     */
     function formatARS(num) {
-      return "$" + Number(num).toLocaleString("es-AR");
+      const clean = Number(num) || 0;
+      return clean.toLocaleString('es-AR');
     }
 
-    // RENDER NEGOCIO
-    function renderBusiness() {
-      const b = appData.business;
-      document.getElementById("site-name").textContent = b.siteName;
-      document.getElementById("footer-name").textContent = b.siteName;
-      document.getElementById("site-location-short").textContent = b.locationShort;
-      document.getElementById("hero-address").textContent = b.address;
-      document.getElementById("footer-address").textContent = b.address;
-      document.getElementById("footer-hours").textContent = b.hours;
-      document.getElementById("footer-whatsapp").textContent = "+" + b.whatsapp.replace(/^\+/, "");
-      document.getElementById("footer-ig").textContent = b.instagram;
-      document.getElementById("hero-title").textContent = b.heroTitle;
-      document.getElementById("hero-subtitle").textContent = b.heroSubtitle;
-      document.getElementById("footer-desc").textContent = b.footerDesc;
+    /**
+     * Extrae un número limpio desde texto editado
+     */
+    function parseNumberInput(text) {
+      const digits = String(text).replace(/[^\d]/g, '');
+      return digits ? parseInt(digits, 10) : 0;
     }
 
-    // RENDER PASES Y EVENTOS
-    function renderPasses() {
-      const container = document.getElementById("passes-container");
-      const select = document.getElementById("res-type");
-      container.innerHTML = "";
-      select.innerHTML = "";
+    /**
+     * Alterna el Modo Edición / Admin en vivo
+     */
+    function toggleAdminMode() {
+      isAdminMode = !isAdminMode;
+      const body = document.body;
+      const banner = document.getElementById('admin-banner');
+      const btn = document.getElementById('btn-toggle-admin');
 
-      appData.passes.forEach((p, idx) => {
-        const card = document.createElement("div");
-        card.className = `parchment-box pass-card ${p.vip ? "vip" : ""}`;
-        card.innerHTML = `
-          <div>
-            <span class="pass-tag">${p.tag}</span>
-            <h3 data-editable="pass-name-${idx}">${p.name}</h3>
-            <div class="pass-price" data-editable="pass-price-${idx}">${formatARS(p.price)}</div>
-            <p class="pass-desc" data-editable="pass-desc-${idx}">${p.desc}</p>
-          </div>
-          <button class="btn ${p.vip ? "btn-gold" : "btn-primary"}" onclick="selectPassForBooking('${p.id}')">
-            ${p.vip ? "👑 Consultar Membresía" : "📅 Reservar Este Pase"}
-          </button>
-        `;
-        container.appendChild(card);
+      if (isAdminMode) {
+        body.classList.add('admin-mode');
+        banner.classList.remove('hidden');
+        btn.classList.add('bg-dorado', 'text-madera-dark');
+        showToast('Modo Edición Activado', 'Tocá cualquier precio, dirección o dato resaltado para modificarlo.');
+      } else {
+        body.classList.remove('admin-mode');
+        banner.classList.add('hidden');
+        btn.classList.remove('bg-dorado', 'text-madera-dark');
+        saveAppState();
+        updateReservationEstimate();
+        showToast('Cambios Guardados', 'Los precios y datos del emprendimiento quedaron guardados en este navegador.');
+      }
 
-        const opt = document.createElement("option");
-        opt.value = p.id;
-        opt.textContent = `${p.name} (${formatARS(p.price)})`;
-        select.appendChild(opt);
+      applyEditableAttributes();
+      renderMenu();
+      renderCatalog();
+    }
+
+    /**
+     * Restaura todos los precios y datos a los originales del flyer
+     */
+    function resetAllData() {
+      appState = JSON.parse(JSON.stringify(DEFAULT_STATE));
+      saveAppState();
+      syncStaticFields();
+      applyEditableAttributes();
+      renderMenu();
+      renderCatalog();
+      updateReservationEstimate();
+      showToast('Valores Restaurados', 'Se restablecieron todos los precios y textos originales.');
+    }
+
+    /**
+     * Sincroniza los campos estáticos del DOM con appState
+     */
+    function syncStaticFields() {
+      document.querySelectorAll('[data-key]').forEach((el) => {
+        const keyPath = el.getAttribute('data-key').split('.');
+        let val = appState;
+        for (const k of keyPath) {
+          if (val && val[k] !== undefined) val = val[k];
+        }
+        if (keyPath[0] === 'prices') {
+          el.textContent = formatARS(val);
+        } else {
+          el.textContent = val;
+        }
       });
-      updateBookingSummary();
     }
 
-    // RENDER CARTA
-    function filterMenu(cat, btn) {
-      currentMenuFilter = cat;
-      document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
-      if (btn) btn.classList.add("active");
+    /**
+     * Habilita o deshabilita contentEditable según isAdminMode
+     */
+    function applyEditableAttributes() {
+      document.querySelectorAll('.editable-field').forEach((el) => {
+        el.contentEditable = isAdminMode ? 'true' : 'false';
+        if (isAdminMode) {
+          el.onblur = () => {
+            const dataKey = el.getAttribute('data-key');
+            if (!dataKey) return;
+            const [section, field] = dataKey.split('.');
+            if (section === 'prices') {
+              const num = parseNumberInput(el.textContent);
+              appState.prices[field] = num;
+              el.textContent = formatARS(num);
+              // Sincronizar otras apariciones de la misma clave
+              syncStaticFields();
+              updateReservationEstimate();
+            } else if (section === 'info') {
+              appState.info[field] = el.textContent.trim();
+              syncStaticFields();
+            }
+            saveAppState();
+          };
+        }
+      });
+    }
+
+    /**
+     * Filtra la carta por categoría
+     */
+    function filterMenuTab(category) {
+      currentMenuTab = category;
+      document.querySelectorAll('.menu-tab-btn').forEach((btn) => {
+        if (btn.getAttribute('data-tab') === category) {
+          btn.classList.remove('bg-pergamino-dark', 'text-madera-dark');
+          btn.classList.add('bg-madera', 'text-dorado');
+        } else {
+          btn.classList.add('bg-pergamino-dark', 'text-madera-dark');
+          btn.classList.remove('bg-madera', 'text-dorado');
+        }
+      });
       renderMenu();
     }
 
+    /**
+     * Renderiza la grilla de Cafetería y Gastronomía
+     */
     function renderMenu() {
-      const container = document.getElementById("menu-container");
-      container.innerHTML = "";
-      appData.menu.forEach((item, idx) => {
-        if (currentMenuFilter !== "todos" && item.cat !== currentMenuFilter) return;
-        const div = document.createElement("div");
-        div.className = "menu-item";
-        div.innerHTML = `
-          <div class="menu-item-info">
-            <strong data-editable="menu-name-${idx}">${item.name}</strong>
-            <small data-editable="menu-note-${idx}">${item.note}</small>
-          </div>
-          <div class="menu-item-price" data-editable="menu-price-${idx}">${formatARS(item.price)}</div>
-        `;
-        container.appendChild(div);
-      });
-    }
+      const grid = document.getElementById('menu-items-grid');
+      const filtered =
+        currentMenuTab === 'all'
+          ? appState.menu
+          : appState.menu.filter((item) => item.category === currentMenuTab);
 
-    // RENDER CATÁLOGO DE JUEGOS
-    function renderGames() {
-      const container = document.getElementById("games-container");
-      const query = document.getElementById("game-search").value.toLowerCase();
-      container.innerHTML = "";
+      const catLabels = {
+        cafeteria: 'Cafetería',
+        pasteleria: 'Pastelería',
+        salado: 'Almuerzos y Cenas',
+        bebidas: 'Bebida Fría',
+      };
 
-      appData.games.forEach((g, idx) => {
-        if (query && !g.name.toLowerCase().includes(query) && !g.desc.toLowerCase().includes(query)) return;
-        const fallback = getFallbackSVG(g.name, "#4a2e1f", "#8b1e1e", "🎲");
-        const card = document.createElement("div");
-        card.className = "parchment-box game-card";
-        card.innerHTML = `
-          <div class="game-img-wrap">
-            <button class="delete-game-btn" onclick="deleteGame(${idx})">🗑️ Eliminar</button>
-            <img src="${g.img || fallback}" alt="${g.name}" onerror="this.onerror=null;this.src='${fallback}';" />
-          </div>
-          <div class="game-body">
-            <div>
-              <div class="game-meta" data-editable="game-meta-${idx}">${g.meta}</div>
-              <h3 data-editable="game-name-${idx}">${g.name}</h3>
-              <p data-editable="game-desc-${idx}">${g.desc}</p>
+      grid.innerHTML = filtered
+        .map(
+          (item) => `
+          <div class="p-4 rounded-2xl bg-pergamino-light/90 border border-pergamino-border hover:border-carmesi transition flex items-center justify-between gap-3 shadow-sm">
+            <div class="min-w-0">
+              <span class="inline-block text-[10px] font-display font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-pergamino-dark text-madera-light mb-1">
+                ${catLabels[item.category] || 'Carta'}
+              </span>
+              <h4
+                class="font-display font-bold text-base text-madera-dark truncate ${isAdminMode ? 'editable-field' : ''}"
+                contenteditable="${isAdminMode}"
+                onblur="updateMenuItem('${item.id}', 'name', this.textContent)"
+              >${item.name}</h4>
+              <p
+                class="text-xs text-madera line-clamp-1 ${isAdminMode ? 'editable-field' : ''}"
+                contenteditable="${isAdminMode}"
+                onblur="updateMenuItem('${item.id}', 'desc', this.textContent)"
+              >${item.desc}</p>
             </div>
-            <div class="game-footer">
-              <span class="game-price" data-editable="game-price-${idx}">${formatARS(g.price)}</span>
-              <button class="btn btn-primary" onclick="addToCart('${g.id}')">+ Comprar</button>
+            <div class="text-right shrink-0">
+              <span class="font-display font-black text-lg sm:text-xl text-carmesi">
+                $<span
+                  class="${isAdminMode ? 'editable-field' : ''}"
+                  contenteditable="${isAdminMode}"
+                  onblur="updateMenuItem('${item.id}', 'price', this.textContent)"
+                >${formatARS(item.price)}</span>
+              </span>
             </div>
           </div>
-        `;
-        container.appendChild(card);
-      });
+        `
+        )
+        .join('');
     }
 
-    // MODO EDICIÓN EN VIVO
-    function toggleEditMode() {
-      isEditMode = !isEditMode;
-      document.body.classList.toggle("edit-mode", isEditMode);
-      const banner = document.getElementById("edit-banner");
-      const btn = document.getElementById("toggle-edit-btn");
-      banner.classList.toggle("visible", isEditMode);
-      if (isEditMode) {
-        btn.classList.add("btn-edit-active");
-        btn.innerHTML = '✅ <span class="btn-text-hide">Finalizar Edición</span>';
+    function updateMenuItem(id, field, value) {
+      const item = appState.menu.find((m) => m.id === id);
+      if (!item) return;
+      if (field === 'price') {
+        item.price = parseNumberInput(value);
       } else {
-        btn.classList.remove("btn-edit-active");
-        btn.innerHTML = '✏️ <span class="btn-text-hide">Editar Precios / Datos</span>';
+        item[field] = value.trim();
       }
+      saveAppState();
+      renderMenu();
     }
 
-    document.addEventListener("click", (e) => {
-      if (!isEditMode) return;
-      const target = e.target.closest("[data-editable]");
-      if (!target) return;
-      e.preventDefault();
-      e.stopPropagation();
+    /**
+     * Renderiza el Catálogo de Juegos de Mesa en venta
+     */
+    function renderCatalog() {
+      const grid = document.getElementById('catalog-grid');
+      const search = (document.getElementById('catalog-search')?.value || '').toLowerCase().trim();
 
-      const key = target.getAttribute("data-editable");
-      let currentVal = target.textContent.trim();
-      const isPrice = key.includes("price");
-      if (isPrice) currentVal = currentVal.replace(/[^\d]/g, "");
+      const items = appState.catalog.filter(
+        (g) =>
+          g.name.toLowerCase().includes(search) ||
+          g.desc.toLowerCase().includes(search) ||
+          g.badge.toLowerCase().includes(search)
+      );
 
-      const newVal = prompt(isPrice ? "Ingresá el nuevo precio (solo números):" : "Editá el texto:", currentVal);
-      if (newVal === null || newVal.trim() === "") return;
-
-      if (key in appData.business) {
-        appData.business[key] = newVal.trim();
-      } else if (key.startsWith("pass-")) {
-        const [, field, idx] = key.split("-");
-        appData.passes[idx][field] = field === "price" ? Number(newVal.replace(/[^\d]/g, "")) : newVal.trim();
-      } else if (key.startsWith("menu-")) {
-        const [, field, idx] = key.split("-");
-        appData.menu[idx][field] = field === "price" ? Number(newVal.replace(/[^\d]/g, "")) : newVal.trim();
-      } else if (key.startsWith("game-")) {
-        const [, field, idx] = key.split("-");
-        appData.games[idx][field] = field === "price" ? Number(newVal.replace(/[^\d]/g, "")) : newVal.trim();
-      }
-
-      saveData();
-      renderAll();
-    });
-
-    function openBusinessSettings() {
-      const b = appData.business;
-      document.getElementById("cfg-name").value = b.siteName;
-      document.getElementById("cfg-whatsapp").value = b.whatsapp;
-      document.getElementById("cfg-address").value = b.address;
-      document.getElementById("cfg-ig").value = b.instagram;
-      document.getElementById("cfg-hours").value = b.hours;
-      document.getElementById("cfg-hero-title").value = b.heroTitle;
-      document.getElementById("cfg-hero-sub").value = b.heroSubtitle;
-      document.getElementById("business-modal").classList.add("open");
-    }
-
-    function saveBusinessSettings(e) {
-      e.preventDefault();
-      appData.business.siteName = document.getElementById("cfg-name").value.trim();
-      appData.business.whatsapp = document.getElementById("cfg-whatsapp").value.replace(/[^\d]/g, "");
-      appData.business.address = document.getElementById("cfg-address").value.trim();
-      appData.business.locationShort = appData.business.address.split(",")[0];
-      appData.business.instagram = document.getElementById("cfg-ig").value.trim();
-      appData.business.hours = document.getElementById("cfg-hours").value.trim();
-      appData.business.heroTitle = document.getElementById("cfg-hero-title").value.trim();
-      appData.business.heroSubtitle = document.getElementById("cfg-hero-sub").value.trim();
-      saveData();
-      renderAll();
-      closeModal("business-modal");
-    }
-
-    function openAddGameModal() {
-      document.getElementById("game-modal").classList.add("open");
-    }
-
-    function saveNewGame(e) {
-      e.preventDefault();
-      const name = document.getElementById("new-game-name").value.trim();
-      const price = Number(document.getElementById("new-game-price").value);
-      const meta = document.getElementById("new-game-meta").value.trim() || "2-6 jugadores • +10 años";
-      const img = document.getElementById("new-game-img").value.trim();
-      const desc = document.getElementById("new-game-desc").value.trim();
-
-      appData.games.push({
-        id: "g-" + Date.now(),
-        name, price, meta, img, desc
-      });
-      saveData();
-      renderGames();
-      e.target.reset();
-      closeModal("game-modal");
-    }
-
-    function deleteGame(idx) {
-      if (confirm(`¿Eliminar "${appData.games[idx].name}" del catálogo?`)) {
-        appData.games.splice(idx, 1);
-        saveData();
-        renderGames();
-      }
-    }
-
-    function resetAllData() {
-      if (confirm("¿Restaurar todos los precios, juegos y datos a los valores originales?")) {
-        appData = structuredClone(DEFAULT_DATA);
-        saveData();
-        renderAll();
-      }
-    }
-
-    function closeModal(id) {
-      document.getElementById(id).classList.remove("open");
-    }
-
-    // RESERVAS
-    function selectPassForBooking(passId) {
-      document.getElementById("res-type").value = passId;
-      updateBookingSummary();
-      document.getElementById("reservas").scrollIntoView({ behavior: "smooth" });
-    }
-
-    function updateBookingSummary() {
-      const passId = document.getElementById("res-type").value;
-      const pass = appData.passes.find(p => p.id === passId) || appData.passes[0];
-      const guests = Math.max(1, Number(document.getElementById("res-guests").value) || 1);
-      const date = document.getElementById("res-date").value;
-      const time = document.getElementById("res-time").value;
-      const isVip = document.getElementById("res-vip-check").checked;
-
-      let subtotal = pass.perPerson ? pass.price * guests : pass.price;
-      if (isVip && !pass.vip) subtotal = Math.round(subtotal * 0.8);
-
-      document.getElementById("sum-type").textContent = pass.name;
-      document.getElementById("sum-datetime").textContent = date ? `${date} (${time})` : time;
-      document.getElementById("sum-guests").textContent = `${guests} ${guests === 1 ? "persona" : "personas"}`;
-      document.getElementById("sum-total").textContent = formatARS(subtotal);
-    }
-
-    function submitBooking(e) {
-      e.preventDefault();
-      const name = document.getElementById("res-name").value.trim();
-      const phone = document.getElementById("res-phone").value.trim();
-      const passId = document.getElementById("res-type").value;
-      const pass = appData.passes.find(p => p.id === passId);
-      const guests = document.getElementById("res-guests").value;
-      const date = document.getElementById("res-date").value;
-      const time = document.getElementById("res-time").value;
-      const notes = document.getElementById("res-notes").value.trim();
-      const total = document.getElementById("sum-total").textContent;
-
-      const msg = `🎲 *Nueva Reserva - ${appData.business.siteName}*
-
-` +
-        `👤 *Nombre:* ${name}
-` +
-        `📞 *Tel:* ${phone}
-` +
-        `🎟️ *Experiencia:* ${pass.name}
-` +
-        `👥 *Personas:* ${guests}
-` +
-        `📅 *Fecha:* ${date}
-` +
-        `⏰ *Turno:* ${time}
-` +
-        `💰 *Total Estimado:* ${total}
-` +
-        (notes ? `📝 *Notas:* ${notes}` : "");
-
-      const waUrl = `https://wa.me/${appData.business.whatsapp}?text=${encodeURIComponent(msg)}`;
-      window.open(waUrl, "_blank");
-    }
-
-    // CARRITO DE COMPRAS
-    function addToCart(gameId) {
-      const existing = cart.find(item => item.id === gameId);
-      if (existing) existing.qty += 1;
-      else cart.push({ id: gameId, qty: 1 });
-      saveCart();
-      openCart();
-    }
-
-    function changeQty(gameId, delta) {
-      const idx = cart.findIndex(item => item.id === gameId);
-      if (idx === -1) return;
-      cart[idx].qty += delta;
-      if (cart[idx].qty <= 0) cart.splice(idx, 1);
-      saveCart();
-      renderCart();
-    }
-
-    function updateCartBadge() {
-      const count = cart.reduce((acc, item) => acc + item.qty, 0);
-      document.getElementById("cart-count").textContent = count;
-    }
-
-    function openCart() {
-      renderCart();
-      document.getElementById("cart-drawer").classList.add("open");
-    }
-
-    function closeCart() {
-      document.getElementById("cart-drawer").classList.remove("open");
-    }
-
-    function renderCart() {
-      const container = document.getElementById("cart-items");
-      container.innerHTML = "";
-      let total = 0;
-
-      if (cart.length === 0) {
-        container.innerHTML = `<p style="text-align:center; color:var(--ink-muted); margin-top:2rem;">Tu carrito está vacío. ¡Explorá nuestro catálogo de juegos de mesa!</p>`;
-        document.getElementById("cart-total").textContent = "$0";
+      if (items.length === 0) {
+        grid.innerHTML = `
+          <div class="col-span-full text-center py-12 textura-pergamino rounded-2xl">
+            <i class="fa-solid fa-dice-d20 text-4xl text-madera-light mb-2"></i>
+            <p class="font-display font-bold text-lg text-madera-dark">No encontramos ese juego en el catálogo.</p>
+          </div>
+        `;
         return;
       }
 
-      cart.forEach(item => {
-        const game = appData.games.find(g => g.id === item.id);
-        if (!game) return;
-        const sub = game.price * item.qty;
-        total += sub;
-        const div = document.createElement("div");
-        div.className = "cart-item";
-        div.innerHTML = `
-          <div>
-            <strong style="font-family:'Cinzel',serif; display:block;">${game.name}</strong>
-            <small style="color:var(--crimson); font-weight:700;">${formatARS(game.price)} c/u</small>
-          </div>
-          <div class="qty-controls">
-            <button class="qty-btn" onclick="changeQty('${game.id}', -1)">-</button>
-            <strong>${item.qty}</strong>
-            <button class="qty-btn" onclick="changeQty('${game.id}', 1)">+</button>
-          </div>
-        `;
-        container.appendChild(div);
+      grid.innerHTML = items
+        .map(
+          (game) => `
+          <article class="textura-pergamino rounded-3xl overflow-hidden flex flex-col justify-between group hover:-translate-y-1 transition duration-300">
+            <div>
+              <!-- Imagen del juego con fallback temático garantizado -->
+              <div class="relative h-56 overflow-hidden bg-madera-dark border-b-2 border-dorado">
+                <img
+                  src="${game.image}"
+                  alt="${game.name}"
+                  onerror="this.onerror=null; this.src='https://placehold.co/800x500/3b2314/d4af37?text=${encodeURIComponent(game.name)}';"
+                  class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-90"
+                />
+                <div class="absolute inset-0 bg-gradient-to-t from-madera-dark/90 via-madera-dark/25 to-transparent"></div>
+                <span class="absolute top-3 left-3 px-3 py-1 rounded-full bg-carmesi text-pergamino-light border border-dorado font-display font-bold text-xs shadow">
+                  ${game.badge}
+                </span>
+                ${
+                  isAdminMode
+                    ? `<button onclick="deleteGame('${game.id}')" title="Eliminar juego" class="absolute top-3 right-3 w-8 h-8 rounded-full bg-red-700 text-white hover:bg-red-600 flex items-center justify-center shadow">
+                        <i class="fa-solid fa-trash text-xs"></i>
+                      </button>`
+                    : ''
+                }
+                <div class="absolute bottom-3 left-4 right-4 flex items-center justify-between text-pergamino-light">
+                  <span class="text-xs font-semibold flex items-center gap-1.5 bg-madera-dark/80 px-2.5 py-1 rounded-lg border border-dorado/40">
+                    <i class="${game.icon || 'fa-solid fa-users'} text-dorado"></i>
+                    ${game.players}
+                  </span>
+                </div>
+              </div>
+
+              <!-- Detalles del Juego -->
+              <div class="p-6 space-y-2.5">
+                <h3
+                  class="font-display font-black text-xl text-madera-dark leading-snug ${isAdminMode ? 'editable-field' : ''}"
+                  contenteditable="${isAdminMode}"
+                  onblur="updateCatalogGame('${game.id}', 'name', this.textContent)"
+                >${game.name}</h3>
+                <p
+                  class="font-serif text-sm text-madera leading-relaxed ${isAdminMode ? 'editable-field' : ''}"
+                  contenteditable="${isAdminMode}"
+                  onblur="updateCatalogGame('${game.id}', 'desc', this.textContent)"
+                >${game.desc}</p>
+              </div>
+            </div>
+
+            <!-- Precio y Botón Agregar al Carrito -->
+            <div class="px-6 pb-6 pt-3 border-t border-madera/15 flex items-center justify-between gap-3">
+              <div>
+                <span class="block text-[11px] uppercase tracking-wider text-madera-light font-bold">Precio Contado / Transf.</span>
+                <span class="font-display font-black text-2xl text-carmesi">
+                  $<span
+                    class="${isAdminMode ? 'editable-field' : ''}"
+                    contenteditable="${isAdminMode}"
+                    onblur="updateCatalogGame('${game.id}', 'price', this.textContent)"
+                  >${formatARS(game.price)}</span>
+                </span>
+              </div>
+
+              <button
+                onclick="addToCart('${game.id}')"
+                class="px-4 py-3 rounded-xl bg-madera hover:bg-carmesi text-dorado-light hover:text-pergamino-light font-display font-bold text-xs sm:text-sm border border-dorado shadow transition flex items-center gap-2 shrink-0"
+              >
+                <i class="fa-solid fa-cart-plus"></i>
+                Agregar
+              </button>
+            </div>
+          </article>
+        `
+        )
+        .join('');
+    }
+
+    function updateCatalogGame(id, field, value) {
+      const game = appState.catalog.find((g) => g.id === id);
+      if (!game) return;
+      if (field === 'price') {
+        game.price = parseNumberInput(value);
+      } else {
+        game[field] = value.trim();
+      }
+      saveAppState();
+      renderCatalog();
+      renderCart();
+    }
+
+    function deleteGame(id) {
+      appState.catalog = appState.catalog.filter((g) => g.id !== id);
+      cart = cart.filter((c) => c.id !== id);
+      saveAppState();
+      renderCatalog();
+      renderCart();
+      showToast('Juego Eliminado', 'El artículo fue quitado del catálogo.');
+    }
+
+    /**
+     * Modal para agregar nuevo juego en Modo Edición
+     */
+    function openAddGameModal() {
+      document.getElementById('add-game-modal').classList.remove('hidden');
+    }
+    function closeAddGameModal() {
+      document.getElementById('add-game-modal').classList.add('hidden');
+    }
+    function handleAddNewGame(e) {
+      e.preventDefault();
+      const name = document.getElementById('new-game-name').value.trim();
+      const price = parseNumberInput(document.getElementById('new-game-price').value);
+      const players = document.getElementById('new-game-players').value.trim();
+      const img =
+        document.getElementById('new-game-img').value.trim() ||
+        `https://placehold.co/800x500/3b2314/d4af37?text=${encodeURIComponent(name)}`;
+      const desc = document.getElementById('new-game-desc').value.trim();
+
+      appState.catalog.push({
+        id: 'g-' + Date.now(),
+        name,
+        players,
+        price,
+        badge: 'Nuevo Ingreso',
+        desc,
+        image: img,
+        icon: 'fa-solid fa-dice',
       });
 
-      document.getElementById("cart-total").textContent = formatARS(total);
+      saveAppState();
+      renderCatalog();
+      closeAddGameModal();
+      e.target.reset();
+      showToast('¡Juego Agregado!', `${name} ya está disponible en el catálogo.`);
     }
 
-    function checkoutCart() {
-      if (cart.length === 0) return;
+    /**
+     * GESTIÓN DEL CARRITO DE COMPRAS
+     */
+    function addToCart(gameId) {
+      const game = appState.catalog.find((g) => g.id === gameId);
+      if (!game) return;
+
+      const existing = cart.find((item) => item.id === gameId);
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        cart.push({ id: game.id, qty: 1 });
+      }
+
+      renderCart();
+      showToast('¡Agregado al Botín!', `${game.name} se sumó a tu carrito.`);
+    }
+
+    function changeCartQty(gameId, delta) {
+      const item = cart.find((c) => c.id === gameId);
+      if (!item) return;
+      item.qty += delta;
+      if (item.qty <= 0) {
+        cart = cart.filter((c) => c.id !== gameId);
+      }
+      renderCart();
+    }
+
+    function toggleCartModal(open) {
+      const modal = document.getElementById('cart-modal');
+      if (open) {
+        modal.classList.remove('hidden');
+        renderCart();
+      } else {
+        modal.classList.add('hidden');
+      }
+    }
+
+    function renderCart() {
+      const container = document.getElementById('cart-items-container');
+      const badge = document.getElementById('cart-badge');
+      const totalEl = document.getElementById('cart-total-amount');
+
+      const totalCount = cart.reduce((acc, item) => acc + item.qty, 0);
+      badge.textContent = totalCount;
+
+      if (cart.length === 0) {
+        container.innerHTML = `
+          <div class="text-center py-12 space-y-3">
+            <i class="fa-solid fa-box-open text-5xl text-madera-light/60"></i>
+            <p class="font-display font-bold text-lg text-madera-dark">Tu carrito está vacío</p>
+            <p class="text-xs text-madera">Explorá nuestro catálogo y elegí tu próxima aventura.</p>
+          </div>
+        `;
+        totalEl.textContent = '$0';
+        return;
+      }
+
+      let grandTotal = 0;
+      container.innerHTML = cart
+        .map((item) => {
+          const game = appState.catalog.find((g) => g.id === item.id);
+          if (!game) return '';
+          const subtotal = game.price * item.qty;
+          grandTotal += subtotal;
+
+          return `
+            <div class="p-3.5 rounded-2xl bg-pergamino-light border border-pergamino-border flex items-center justify-between gap-3">
+              <div class="min-w-0">
+                <h4 class="font-display font-bold text-sm text-madera-dark truncate">${game.name}</h4>
+                <p class="text-xs text-carmesi font-bold">$${formatARS(game.price)} c/u</p>
+              </div>
+              <div class="flex items-center gap-2 shrink-0">
+                <button onclick="changeCartQty('${game.id}', -1)" class="w-7 h-7 rounded-lg bg-pergamino-dark hover:bg-madera hover:text-dorado font-bold text-sm transition">-</button>
+                <span class="font-bold text-sm w-5 text-center">${item.qty}</span>
+                <button onclick="changeCartQty('${game.id}', 1)" class="w-7 h-7 rounded-lg bg-pergamino-dark hover:bg-madera hover:text-dorado font-bold text-sm transition">+</button>
+              </div>
+            </div>
+          `;
+        })
+        .join('');
+
+      totalEl.textContent = '$' + formatARS(grandTotal);
+    }
+
+    function checkoutCartWhatsApp() {
+      if (cart.length === 0) {
+        showToast('Carrito Vacío', 'Agregá al menos un juego de mesa antes de finalizar.');
+        return;
+      }
+
       let total = 0;
-      let lines = cart.map(item => {
-        const g = appData.games.find(x => x.id === item.id);
-        if (!g) return "";
-        const sub = g.price * item.qty;
+      const lines = cart.map((item) => {
+        const game = appState.catalog.find((g) => g.id === item.id);
+        const sub = game.price * item.qty;
         total += sub;
-        return `• ${item.qty}x ${g.name} (${formatARS(sub)})`;
-      }).filter(Boolean);
+        return `• ${item.qty}x ${game.name} ($${formatARS(sub)})`;
+      });
 
-      const msg = `🛒 *Pedido de Juegos - ${appData.business.siteName}*
+      const msg =
+        `¡Hola *${appState.info.brandName}*! 🎲☕ Quiero realizar la compra de los siguientes juegos:\n\n` +
+        lines.join('\n') +
+        `\n\n*Total estimado: $${formatARS(total)}*\n` +
+        `Retiro / Coordinación en: ${appState.info.address}`;
 
-` +
-        lines.join("
-") +
-        `
-
-💰 *Total:* ${formatARS(total)}
-📍 Retiro / Coordinación en ${appData.business.address}`;
-
-      window.open(`https://wa.me/${appData.business.whatsapp}?text=${encodeURIComponent(msg)}`, "_blank");
+      const cleanPhone = appState.info.whatsapp.replace(/[^\d]/g, '');
+      const waUrl = `https://wa.me/${cleanPhone}?text=${encodeURIComponent(msg)}`;
+      window.open(waUrl, '_blank', 'noopener');
+      toggleCartModal(false);
     }
 
-    function renderAll() {
-      renderBusiness();
-      renderPasses();
+    /**
+     * SISTEMA DE RESERVAS Y CÁLCULO DE TARIFAS
+     */
+    function preselectReservation(type) {
+      const select = document.getElementById('res-type');
+      select.value = type;
+      updateReservationEstimate();
+      document.getElementById('reservas').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function updateReservationEstimate() {
+      const type = document.getElementById('res-type').value;
+      const guests = Math.max(1, parseInt(document.getElementById('res-guests').value, 10) || 1);
+      const totalEl = document.getElementById('res-estimate-total');
+      const detailEl = document.getElementById('res-estimate-detail');
+      const p = appState.prices;
+
+      let total = 0;
+      let detail = '';
+
+      switch (type) {
+        case 'pase-libre':
+          total = guests * p.paseLibre;
+          detail = `${guests} persona(s) × $${formatARS(p.paseLibre)} (Pase Libre 3hs)`;
+          break;
+        case 'pase-grupal': {
+          const packs = Math.ceil(guests / 4);
+          total = packs * p.paseGrupal;
+          detail = `${packs} Pase(s) Grupal(es) hasta 4 pers. × $${formatARS(p.paseGrupal)}`;
+          break;
+        }
+        case 'torneo':
+          total = guests * p.torneo;
+          detail = `${guests} inscripción(es) × $${formatARS(p.torneo)}`;
+          break;
+        case 'noche-rol':
+          total = guests * p.nocheRol;
+          detail = `${guests} aventurero(s) × $${formatARS(p.nocheRol)} (Noche de Rol)`;
+          break;
+        case 'jornada-especial':
+          total = p.jornadaEspecial;
+          detail = `Organización base Jornada Especial para ${guests} personas`;
+          break;
+        case 'socio-vip':
+          totalEl.textContent = 'A Consultar';
+          detailEl.textContent = 'Te asesoramos con los planes y beneficios VIP vigentes';
+          return;
+      }
+
+      totalEl.textContent = '$' + formatARS(total);
+      detailEl.textContent = detail;
+    }
+
+    function handleReservationSubmit(e) {
+      e.preventDefault();
+      const typeSelect = document.getElementById('res-type');
+      const typeLabel = typeSelect.options[typeSelect.selectedIndex].text;
+      const guests = document.getElementById('res-guests').value;
+      const date = document.getElementById('res-date').value;
+      const time = document.getElementById('res-time').value;
+      const name = document.getElementById('res-name').value.trim();
+      const phone = document.getElementById('res-phone').value.trim();
+      const game = document.getElementById('res-game').value.trim() || 'A elegir en ludoteca';
+      const notes = document.getElementById('res-notes').value.trim() || 'Sin notas adicionales';
+      const estimate = document.getElementById('res-estimate-total').textContent;
+
+      const msg =
+        `¡Hola *${appState.info.brandName}*! 🎲☕ Quiero reservar un lugar:\n\n` +
+        `• *Experiencia:* ${typeLabel}\n` +
+        `• *Fecha:* ${date}\n` +
+        `• *Turno:* ${time}\n` +
+        `• *Personas:* ${guests}\n` +
+        `• *Juego preferido:* ${game}\n` +
+        `• *A nombre de:* ${name} (${phone})\n` +
+        `• *Notas:* ${notes}\n` +
+        `• *Total Estimado:* ${estimate}`;
+
+      const cleanPhone = appState.info.whatsapp.replace(/[^\d]/g, '');
+      const waUrl = `https://wa.me/${cleanPhone}?text=${encodeURIComponent(msg)}`;
+
+      showToast(
+        '¡Reserva Preparada!',
+        `Mesa para ${guests} personas el ${date}. Abriendo WhatsApp para confirmar con el local.`
+      );
+      window.open(waUrl, '_blank', 'noopener');
+    }
+
+    function openWhatsAppGeneral() {
+      const cleanPhone = appState.info.whatsapp.replace(/[^\d]/g, '');
+      const msg = `¡Hola ${appState.info.brandName}! Quisiera hacer una consulta.`;
+      window.open(`https://wa.me/${cleanPhone}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener');
+    }
+
+    /**
+     * MENÚ MÓVIL Y NOTIFICACIONES
+     */
+    function toggleMobileMenu() {
+      document.getElementById('mobile-menu').classList.toggle('hidden');
+    }
+
+    let toastTimeout = null;
+    function showToast(title, message) {
+      const box = document.getElementById('toast-box');
+      document.getElementById('toast-title').textContent = title;
+      document.getElementById('toast-message').textContent = message;
+      box.classList.remove('hidden');
+
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        box.classList.add('hidden');
+      }, 4500);
+    }
+
+    function hideToast() {
+      document.getElementById('toast-box').classList.add('hidden');
+    }
+
+    /**
+     * INICIALIZACIÓN AL CARGAR LA PÁGINA
+     */
+    window.addEventListener('DOMContentLoaded', () => {
+      // Establecer fecha mínima de hoy en el formulario de reserva
+      const dateInput = document.getElementById('res-date');
+      if (dateInput) {
+        const today = new Date().toISOString().split('T')[0];
+        dateInput.min = today;
+        dateInput.value = today;
+      }
+
+      syncStaticFields();
       renderMenu();
-      renderGames();
-      updateCartBadge();
-    }
-
-    // Fecha mínima hoy en el selector
-    document.getElementById("res-date").min = new Date().toISOString().split("T")[0];
-    renderAll();
+      renderCatalog();
+      renderCart();
+      updateReservationEstimate();
+    });
   </script>
 </body>
 </html>
